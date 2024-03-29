@@ -3,10 +3,12 @@ import org.junit.After;
 import java.lang.reflect.Field;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.rules.Timeout;
 
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
+import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 
 import javax.swing.*;
@@ -27,6 +29,7 @@ import static org.junit.Assert.*;
  * @author Purdue CS
  * @version Jan 13, 2024
  */
+@RunWith(Enclosed.class)
 public class TestProgram {
     public static void main(String[] args) {
         Result result = JUnitCore.runClasses(TestCase.class);
