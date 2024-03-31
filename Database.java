@@ -11,7 +11,7 @@ public class Database {
     }
 
     public void addUser(User user) {
-        int verify =0;
+        int verify = 0;
         //checks if there is user is already a friend
         for (User value : users) {
             if (value.getUsername().equals(user.getUsername())) {
