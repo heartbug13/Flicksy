@@ -58,12 +58,12 @@ Methods:
 Interface: Profiles
 </b>
 
-| Method Name    | Return Type | Input Parameters | Description                                  |
-|----------------|-------------|------------------|----------------------------------------------|
-| getName        | String      | none             | returns the name                             |
-| getBio         | Profile     | none             | returns the bio                              |
-| setName        | void        | String name      | sets the name to the given value             |
-| setBio         | void        | String bio       | sets the bio to the given value              |
+| Method Name    | Return Type | Input Parameters | Description                         |
+|----------------|-------------|------------------|-------------------------------------|
+| getName        | String      | none             | returns the name                    |
+| getBio         | Profile     | none             | returns the bio                     |
+| setName        | void        | String name      | sets the name to the given value    |
+| setBio         | void        | String bio       | sets the bio to the given value     |
 
 <b>
 Class: Profile

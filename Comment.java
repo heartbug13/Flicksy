@@ -1,4 +1,4 @@
-public class Comment implements Comments{
+public class Comment implements Comments {
     private User author;
     private String content;
     private int likes;
