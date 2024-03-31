@@ -1,5 +1,5 @@
 import java.util.List;
-public interface Database {
+public interface Databases {
     void addUser(User user);
     User getUserByUsername(String username);
     void addPost(Post post);

@@ -1,5 +1,5 @@
 import java.util.List;
-public interface Post {
+public interface Posts {
     User getAuthor();
     String getContent();
     int getLikes();
