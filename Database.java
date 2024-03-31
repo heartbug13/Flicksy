@@ -2,8 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-    ArrayList<User> users;
-    ArrayList<Post> posts;
+    private ArrayList<User> users;
+    private ArrayList<Post> posts;
+
+    public Database() {
+        users = new ArrayList<>();
+        posts = new ArrayList<>();
+    }
 
     public void addUser(User user) {
         int verify = 0;
@@ -29,8 +34,17 @@ public class Database {
     }
 
     public void addPost(Post post) {
-        posts.add(post);
+        int verify = 0;
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i).equal(post)) {
+                verify++;
+            }
+        }
+        if (verify == 0) {
+            posts.add(post);
+        }
     }
+
     public List<Post> getPostsByUser(User user) {
         List<Post> post = new ArrayList<>();
         for (Post value : posts) {

@@ -7,6 +7,8 @@ public class Comment implements Comments{
     public Comment(User author , String content) {
         this.content = content;
         this.author = author;
+        this.likes = 0;
+        this.dislikes = 0;
     }
 
     public User getAuthor() {

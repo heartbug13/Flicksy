@@ -52,6 +52,7 @@ Methods:
 | public           | blockUser      | void        | User user        | blocks the user                                                                                                                                                                                          |
 | public           | setPassword    | void        | String password  | sets the password of the given password, throws Invalid Password Exception                                                                                                                               |
 | public           | verifyPassword | boolean     | String password  | verifies that the given password is correct                                                                                                                                                              |
+| public           | equal          | boolean     | User user        | checks if user is equal to this.user <br> <br> user are considered equal if they have the same username                                                                                                  |
 
 <b>
 Interface: Profiles
@@ -128,19 +129,22 @@ Constructor:
 
 Methods: 
 
-| Access Modifiers | Method Name   | Return Type   | Input Parameters | Description                                 |
-|------------------|---------------|---------------|------------------|---------------------------------------------|
-| public           | getAuthor     | User          | none             | returns the author                          |
-| public           | getContent    | String        | none             | returns the content                         |
-| public           | getLikes      | int           | String name      | return the amount likes                     |
-| public           | getDislikes   | int           | none             | return the amount of dislikes               |
-| public           | getComments   | List<Comment> | none             | return a list of comment                    |
-| public           | addComments   | void          | Comment comment  | add a comment to the list of comments       |
-| public           | deleteComment | void          | Comment comment  | removes a comment from the list of comments |
-| public           | like          | void          | none             | increases like by one                       |
-| public           | dislike       | void          | none             | increases dislike by one                    |
+| Access Modifiers | Method Name   | Return Type   | Input Parameters | Description                                                                                                       |
+|------------------|---------------|---------------|------------------|-------------------------------------------------------------------------------------------------------------------|
+| public           | getAuthor     | User          | none             | returns the author                                                                                                |
+| public           | getContent    | String        | none             | returns the content                                                                                               |
+| public           | getLikes      | int           | String name      | return the amount likes                                                                                           |
+| public           | getDislikes   | int           | none             | return the amount of dislikes                                                                                     |
+| public           | getComments   | List<Comment> | none             | return a list of comment                                                                                          |
+| public           | addComments   | void          | Comment comment  | add a comment to the list of comments                                                                             |
+| public           | deleteComment | void          | Comment comment  | removes a comment from the list of comments                                                                       |
+| public           | like          | void          | none             | increases like by one                                                                                             |
+| public           | dislike       | void          | none             | increases dislike by one                                                                                          |
+| public           | equal         | boolean       | Post post        | checks if post is equal to this.post <br> <br> post are considered equal if they have the same content and author |
 
-Interface: Database
+<b>
+Interface: Databases
+</b>
 
 | Method Name        | Return Type   | Input Parameters           | Description                             |
 |--------------------|---------------|----------------------------|-----------------------------------------|
@@ -151,7 +155,37 @@ Interface: Database
 | addCommendToPost   | void          | Comment comment, Post post | adds a comment to the post              |
 | getCommentsForPost | List<Comment> | Post post                  | return the list of comments of the post |
 
-Interface: Comment
+<b>
+Class: Database
+</b>
+
+Fields:
+
+| Access Modifier | Field Name | Type             | Description           |
+|-----------------|------------|------------------|-----------------------|
+| private         | users      | ArrayList<Users> | list of all the users |
+| private         | posts      | ArrayList<Post>  | list of all the posts |
+
+Constructor:
+
+| Access Modifier | Constructor Name | Input Parameters | Description                                                                  |
+|-----------------|------------------|------------------|------------------------------------------------------------------------------|
+| public          | Database         | none             | Constructs a new Database and instantiate new array list for users and posts |
+
+Methods: 
+
+| Access Modifier | Method Name        | Return Type   | Input Parameters           | Description                                                                 |
+|-----------------|--------------------|---------------|----------------------------|-----------------------------------------------------------------------------|
+| public          | addUser            | void          | User user                  | checks that user is not already added <br> <br> adds a user to the database |
+| public          | getUserByUsername  | User          | String username            | returns the user based on the username                                      |
+| public          | addPost            | List<Post>    | Post post                  | adds post to the array list posts                                           |
+| public          | getPostByUser      | void          | User user                  | returns all the posts made by user                                          |
+| public          | addCommendToPost   | void          | Comment comment, Post post | adds a comment to the post                                                  |
+| public          | getCommentsForPost | List<Comment> | Post post                  | returns the list of comments of the post                                    |
+
+<b>
+Interface: Comments
+</b>
 
 | Method Name | Return Type | Input Parameters | Description                       |
 |-------------|-------------|------------------|-----------------------------------|
@@ -161,3 +195,34 @@ Interface: Comment
 | getDislikes | int         | none             | returns the amount of dislikes    |
 | like        | void        | none             | increases like by one             |
 | dislike     | void        | none             | increases dislike by one          |
+
+<b>
+Class: Comment
+</b>
+
+Fields:
+
+| Access Modifier | Field Name | Type             | Description           |
+|-----------------|------------|------------------|-----------------------|
+| private         | author     | ArrayList<Users> | list of all the users |
+| private         | content    | ArrayList<Post>  | list of all the posts |
+| private         | likes      | int              | amount of likes       |
+| private         | dislikes   | int              | amount of dislikes    |
+
+Constructor:
+
+| Access Modifier | Constructor Name | Input Parameters            | Description                                                                                                                    |
+|-----------------|------------------|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| public          | Comment          | User author, String content | Constructs a new Comment and initiates the fields with the respective parameters <br> <br> Also sets likes and dislikes to 0   |
+
+Methods:
+
+| Access Modifier | Method Name | Return Type | Input Parameters | Description                                                                                                                 |
+|-----------------|-------------|-------------|------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| public          | getAuthor   | User        | none             | returns the author of the comment                                                                                           |
+| public          | getContent  | String      | none             | returns the content of comment                                                                                              |
+| public          | getLikes    | int         | none             | returns the amount of likes                                                                                                 |
+| public          | getDislikes | int         | none             | returns the amount of dislikes                                                                                              |
+| public          | like        | void        | none             | increases like by one                                                                                                       |
+| public          | dislike     | void        | none             | increases dislike by one                                                                                                    |
+| public          | equal       | boolean     | Comment comment  | checks if comment is equal to this.comment <br> <br> comments are considered equal if they have the same content and author |
