@@ -5,20 +5,57 @@ text <br>
 Name - Submitted Report <br> 
 Name - Submitted Report <br>
 
-Interface: User
+<b>
+Interface: Users
+</b>
 
-| Method Name    | Return Type | Input Parameters | Description                                  |
-|----------------|-------------|------------------|----------------------------------------------|
-| getUserName    | String      | none             | returns the username                         |
-| getProfile     | Profile     | none             | returns the users profile                    |
-| getFriends     | List<User>  | none             | returns a list of friends                    |
-| addFriends     | void        | User user        | adds a friend to the list of friends         |
-| removeFriends  | void        | User user        | removes a friend from the list of friends    |
-| blockUser      | void        | User user        | blocks the user                              |
-| setPassword    | void        | String password  | sets the password of the given password      |
-| verifyPassword | boolean     | String password  | verifies that the given password is correct  |
+| Method Name    | Return Type | Input Parameters | Description                                                                |
+|----------------|-------------|------------------|----------------------------------------------------------------------------|
+| getUserName    | String      | none             | returns the username                                                       |
+| getProfile     | Profile     | none             | returns the users profile                                                  |
+| getFriends     | List<User>  | none             | returns a list of friends                                                  |
+| addFriends     | void        | User user        | adds a friend to the list of friends, throws Blocked User Exception        |
+| removeFriends  | void        | User user        | removes a friend from the list of friends                                  |
+| blockUser      | void        | User user        | blocks the user                                                            |
+| setPassword    | void        | String password  | sets the password of the given password, throws Invalid Password Exception |
+| verifyPassword | boolean     | String password  | verifies that the given password is correct                                |
 
-Interface: Profile
+<b>
+Class: User
+</b>
+
+Fields:
+
+| Access Modifier | Field Name     | Type       | Description                               |
+|-----------------|----------------|------------|-------------------------------------------|
+| private         | username       | String     | username of user                          |
+| private         | password       | String     | password of user                          |
+| private         | friends        | List<User> | list of all the friends of the user       |
+| private         | profile        | Profile    | profile of user                           |
+| private         | blocked        | List<User> | list of all the blocked users of the user |
+
+Constructor:
+
+| Access Modifier | Constructor Name | Input Parameters                                     | Description                                                                                                                                                                                                                                                |
+|-----------------|------------------|------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| public          | User             | String username , String password , Profile profile  | checks to make sure that the users password is 12 characters long <br><br> if the password is less than 12 characters long, throw a InvalidPasswordException <br><br> Constructors a newly User and instantiate the fields with the perspective parameters |
+
+Methods:
+
+| Access Modifiers | Method Name    | Return Type | Input Parameters | Description                                                                                                                                                                                              |
+|------------------|----------------|-------------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| public           | getUserName    | String      | none             | returns the username                                                                                                                                                                                     |
+| public           | getProfile     | Profile     | none             | returns the users profile                                                                                                                                                                                |
+| public           | getFriends     | List<User>  | none             | returns a list of friends                                                                                                                                                                                |
+| public           | addFriends     | void        | User user        | checks that the user is not already in the friend list <br> <br> checks if the user is blocked by user, if the user is blocked throw a Blocked User Exception <br> <br> adds user to the list of friends |
+| public           | removeFriends  | void        | User user        | removes a friend from the list of friends                                                                                                                                                                |
+| public           | blockUser      | void        | User user        | blocks the user                                                                                                                                                                                          |
+| public           | setPassword    | void        | String password  | sets the password of the given password, throws Invalid Password Exception                                                                                                                               |
+| public           | verifyPassword | boolean     | String password  | verifies that the given password is correct                                                                                                                                                              |
+
+<b>
+Interface: Profiles
+</b>
 
 | Method Name    | Return Type | Input Parameters | Description                                  |
 |----------------|-------------|------------------|----------------------------------------------|
@@ -27,7 +64,35 @@ Interface: Profile
 | setName        | void        | String name      | sets the name to the given value             |
 | setBio         | void        | String bio       | sets the bio to the given value              |
 
-Interface: Post
+<b>
+Class: Profile
+</b>
+
+Fields:
+
+| Access Modifier | Field Name | Type       | Description                               |
+|-----------------|------------|------------|-------------------------------------------|
+| private         | name       | String     | username of user                          |
+| private         | bio        | String     | password of user                          |
+
+Constructor:
+
+| Access Modifier | Constructor Name | Input Parameters         | Description                                                                         |
+|-----------------|------------------|--------------------------|-------------------------------------------------------------------------------------|
+| public          | Profile          | String name , String bio | Constructs a new Profile and instantiate the fields with the perspective parameters |
+
+Methods:
+
+| Access Modifier | Method Name    | Return Type | Input Parameters | Description                                  |
+|-----------------|----------------|-------------|------------------|----------------------------------------------|
+| public          | getName        | String      | none             | returns the name                             |
+| public          | getBio         | Profile     | none             | returns the bio                              |
+| public          | setName        | void        | String name      | sets the name to the given value             |
+| public          | setBio         | void        | String bio       | sets the bio to the given value              |
+
+<b>
+Interface: Posts
+</b>
 
 | Method Name   | Return Type   | Input Parameters | Description                                 |
 |---------------|---------------|------------------|---------------------------------------------|
@@ -40,6 +105,40 @@ Interface: Post
 | deleteComment | void          | Comment comment  | removes a comment from the list of comments |
 | like          | void          | none             | increases like by one                       |
 | dislike       | void          | none             | increases dislike by one                    |
+
+<b>
+Class: Post
+</b>
+
+Fields:
+
+| Access Modifier | Field Name | Type          | Description                                       |
+|-----------------|------------|---------------|---------------------------------------------------|
+| private         | author     | String        | username of user                                  |
+| private         | content    | String        | password of user                                  |
+| private         | likes      | int           | number of likes the post has                      |
+| private         | dislikes   | int           | number of dislikes the post has                   |
+| private         | comments   | List<Comment> | list of all the comments associated with the post |
+
+Constructor:
+
+| Access Modifier | Constructor Name | Input Parameters              | Description                                                                                                                  |
+|-----------------|------------------|-------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| public          | Post             | User author , String content  | Constructs a new Post and instantiate the fields with the perspective parameters <br> <br> Also sets likes and dislikes to 0 |
+
+Methods: 
+
+| Access Modifiers | Method Name   | Return Type   | Input Parameters | Description                                 |
+|------------------|---------------|---------------|------------------|---------------------------------------------|
+| public           | getAuthor     | User          | none             | returns the author                          |
+| public           | getContent    | String        | none             | returns the content                         |
+| public           | getLikes      | int           | String name      | return the amount likes                     |
+| public           | getDislikes   | int           | none             | return the amount of dislikes               |
+| public           | getComments   | List<Comment> | none             | return a list of comment                    |
+| public           | addComments   | void          | Comment comment  | add a comment to the list of comments       |
+| public           | deleteComment | void          | Comment comment  | removes a comment from the list of comments |
+| public           | like          | void          | none             | increases like by one                       |
+| public           | dislike       | void          | none             | increases dislike by one                    |
 
 Interface: Database
 
