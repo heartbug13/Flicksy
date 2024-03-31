@@ -8,7 +8,7 @@ public interface Users {
     void addFriend(User user);
     void removeFriend(User user);
     void blockUser(User user);
-    void setPassword(String password);
+    void setPassword(String password) throws InvalidPasswordException;
     boolean verifyPassword(String password);
 
 }

@@ -8,7 +8,10 @@ public class User implements Users {
     private List<User> friends;
     private Profile profile;
 
-    public User (String username , String password , Profile profile) {
+    public User (String username , String password , Profile profile) throws InvalidPasswordException{
+        if (password.length() < 12) {
+            throw new InvalidPasswordException("Password must by 12 characters long");
+        }
         this.username = username;
         this.password = password;
         this.profile = profile;
@@ -44,7 +47,10 @@ public class User implements Users {
     public void blockUser(User user) {
 
     }
-    public void setPassword(String password) {
+    public void setPassword(String password) throws InvalidPasswordException{
+        if (password.length() < 12) {
+            throw new InvalidPasswordException("Password must by 12 characters long");
+        }
         this.password = password;
     }
     public boolean verifyPassword(String password) {
