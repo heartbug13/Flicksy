@@ -32,13 +32,29 @@ public class Database {
         posts.add(post);
     }
     public List<Post> getPostsByUser(User user) {
-        return null;
+        List<Post> post = new ArrayList<>();
+        for (Post value : posts) {
+            if (value.getAuthor().equals(user)) {
+                post.add(value);
+            }
+        }
+        return post;
     }
     public void addCommendToPost(Comment comment, Post post) {
-
+        for (Post value : posts) {
+            if (value.equal(post)) {
+                value.addComment(comment);
+            }
+        }
     }
     public List<Comment> getCommentsForPost(Post post) {
-        return null;
+        List<Comment> comments = new ArrayList<>();
+        for (Post value : posts) {
+            if (value.equal(post)) {
+                comments = post.getComments();
+            }
+        }
+        return comments;
     }
 
 

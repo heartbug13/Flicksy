@@ -33,7 +33,7 @@ public class User implements Users {
         int verify = 0;
         //checks if there is user is already a friend
         for (User friend : friends) {
-            if (friend.getUsername().equals(username)) {
+            if (friend.equal(user)) {
                 verify++;
             }
         }
@@ -56,4 +56,9 @@ public class User implements Users {
     public boolean verifyPassword(String password) {
         return this.password.equals(password);
     }
+
+    public boolean equal(User user) {
+        return username.equals(user.getUsername());
+    }
+
 }

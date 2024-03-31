@@ -29,4 +29,8 @@ public class Comment implements Comments{
         this.dislikes++;
     }
 
+    public boolean equal(Comment comment) {
+        return content.equals(comment.getContent()) && author.equal(comment.getAuthor());
+    }
+
 }

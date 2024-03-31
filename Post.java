@@ -43,4 +43,8 @@ public class Post implements Posts {
     public void dislike() {
         this.dislikes++;
     }
+
+    public boolean equal(Post post) {
+        return author.equals(post.getAuthor()) && content.equals(post.getContent());
+    }
 }
