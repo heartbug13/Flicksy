@@ -15,7 +15,6 @@ public class User implements Users {
         this.friends = new ArrayList<>();
     }
 
-
     public String getUsername() {
         return username;
     }
