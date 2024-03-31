@@ -1,5 +1,5 @@
 import java.util.List;
-public interface User {
+public interface Users {
     String getUsername();
 
     Profile getProfile();

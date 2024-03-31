@@ -1,4 +1,4 @@
-public interface Comment {
+public interface Comments {
     User getAuthor();
     String getContent();
     int getLikes();
