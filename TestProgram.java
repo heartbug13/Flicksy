@@ -47,10 +47,10 @@ public class TestProgram {
     /**
      * A set of public test cases.
      *
-     * <p>Purdue University -- CS18000 -- Summer 2022</p>
+     * <p>Purdue University -- CS18000 -- Spring 2023</p>
      *
-     * @author Purdue CS
-     * @version June 13, 2022
+     * @author Samantha Grief
+     * @version March 31, 2024
      */
     public static class TestCase {
         private final PrintStream originalOutput = System.out;
@@ -84,8 +84,9 @@ public class TestProgram {
             System.setIn(testIn);
         }
 
+        //testing user.java and profile.java
         @Test(timeout = 1000)
-        public void testAmusement() {
+        public void testUserAndProfile() {
             try {
                 String bio = "Adventure seeker and coffee enthusiast. With a passion for exploring the outdoors and " +
                         "capturing moments through photography, I'm always on the lookout for the next breathtaking " +
@@ -136,7 +137,7 @@ public class TestProgram {
                 profiles.setBio(bio2);
 
                 assertEquals("Ensure your setName() method in Profile.java sets name to the correct value!", "Jasper Knight", profiles.getName());
-                assertEquals("Ensure your setBio() method in Profile}.java sets admission cost to the correct value!", bio2, profiles.getBio());
+                assertEquals("Ensure your setBio() method in Profile.java sets admission cost to the correct value!", bio2, profiles.getBio());
 
                 User users = new User("FrostyBreeze82", "Sunflower$76" , profiles);
                 User users1 = new User("LoganHenderson4ever", "LoganLover*321" , profiles);
@@ -164,14 +165,14 @@ public class TestProgram {
                 List<User> testFriendsList = users.getFriends();
 
                 for (int i = 0; i < testFriendsList.size(); i++) {
-                    assertEquals("Ensure your getSeasons() method in AmusementPark.java returns the correct value!", expectedFriendList.get(i), testFriendsList.get(i));
+                    assertEquals("Ensure your getFriends() method in User.java returns the correct value!", expectedFriendList.get(i), testFriendsList.get(i));
                 }
 
                 expectedFriendList.remove(users5);
                 users.removeFriend(users5);
 
                 for (int i = 0; i < testFriendsList.size(); i++) {
-                    assertEquals("Ensure your getSeasons() method in AmusementPark.java returns the correct value!", expectedFriendList.get(i), testFriendsList.get(i));
+                    assertEquals("Ensure your removeFriend() method in User.java correctly removes the user!", expectedFriendList.get(i), testFriendsList.get(i));
                 }
 
                 boolean testVerifyPassword1 = users.verifyPassword("Sunflower$76");
@@ -182,9 +183,75 @@ public class TestProgram {
                 assertTrue("Ensure your verifyPassword() method in User.java returns the correct value", testVerifyPassword1);
                 assertFalse("Ensure your verifyPassword() method in User.java returns the correct value", testVerifyPassword2);
 
-                users.setPassword("Whisper$78");
+                Post post1 = new Post(users , "Rushers, let's talk about 'Nothing Even Matters.' From the first " +
+                        "note to the last, this song hits differently. It's like BTR knows exactly what we're feeling and" +
+                        " puts it into music. The lyrics remind us that love is what truly matters. Here's to 'Nothing Even" +
+                        " Matters,' the song that speaks to our hearts every time. #BTRForever");
+                Post post2 = new Post(users5 , "I just saw four dudes singing around a blond girl in the airport. " +
+                        "Literally why?");
 
-                assertEquals("Ensure your getUsername() method in User.java returns the correct value!" , "Whisper$78" , users.getUsername());
+                String bio6 = "Adrenaline junkie and thrill-seeker with a passion for speed and exploration. Whether tearing " +
+                        "up the trails on my mountain bike or revving the engine of my motorcycle, I'm always chasing that rush" +
+                        " of excitement. When I'm not pushing my limits outdoors, you'll find me immersed in the world of video " +
+                        "games, conquering virtual challenges with precision and finesse.";
+
+                Profile profile6 = new Profile("Logan Smith" , bio6);
+
+                Comment comment = new Comment(users4 , "Couldn't agree more, Rushers! 'Nothing Even Matters' holds a " +
+                        "special place in our hearts too. It's incredible to see how our music resonates with you all. " +
+                        "Thanks for the love and support, always. Keep rocking out to your favorite tunes! #BTRForever");
+
+                User users6 = new User("BlazeRunner88" , "Velocity!67Quest" , profile6);
+
+                Comment comment1 = new Comment(users6 , "Absolutely! 'Nothing Even Matters' is pure gold. It's " +
+                        "one of those songs that never fails to hit right in the feels. Thank you, Big Time Rush, for " +
+                        "creating music that speaks to us on such a deep level. Here's to many more unforgettable tunes!");
+
+                post1.like();
+                post1.like();
+                post1.like();
+                post1.like();
+                post1.like();
+
+                post1.addComment(comment1);
+                post1.addComment(comment);
+
+                post2.dislike();
+
+                User testAuthor = post1.getAuthor();
+                String testPostContent = post1.getContent();
+                int testPostLikes = post1.getLikes();
+                int testPostDislikes = post2.getDislikes();
+                List<Comment> expectedComments = new ArrayList<>();
+                expectedComments.add(comment1);
+                expectedComments.add(comment);
+                List<Comment> testComments = post1.getComments();
+
+                for (int i = 0; i < testComments.size(); i++) {
+                    assertEquals("Ensure your getComments() method in Post.java returns the correct value!", expectedComments.get(i), testComments.get(i));
+                }
+
+                assertEquals("Ensure your getAuthor() method in Post.java returns the correct value!" , users , testAuthor);
+                assertEquals("Ensure your getContent() method in Post.java returns the correct value!" , "Rushers, let's talk about 'Nothing Even Matters.' From the first " +
+                        "note to the last, this song hits differently. It's like BTR knows exactly what we're feeling and" +
+                        " puts it into music. The lyrics remind us that love is what truly matters. Here's to 'Nothing Even" +
+                        " Matters,' the song that speaks to our hearts every time. #BTRForever", testPostContent);
+                assertEquals("Ensure your likes() method in Post.java returns the correct value!" ,5 , testPostLikes);
+                assertEquals("Ensure your dislikes() method in Post.java returns the correct value!" ,1 , testPostDislikes);
+
+                User testCommentAuthor = comment.getAuthor();
+                String testCommentContent = comment.getContent();
+                comment.like();
+                comment.like();
+                int testCommentLike = comment.getLikes();
+
+                assertEquals("Ensure your getAuthor() method in Comment.java returns the correct value!" , users4 , testCommentAuthor);
+                assertEquals("Ensure your getContent() method in Comment.java returns the correct value!" ,
+                        "Couldn't agree more, Rushers! 'Nothing Even Matters' holds a " + "special place " +
+                                "in our hearts too. It's incredible to see how our music resonates with you all. "
+                                + "Thanks for the love and support, always. Keep rocking out to your favorite tunes! #BTRForever" , testCommentContent);
+                assertEquals("Ensure your getLikes() method in Post.java returns the correct value!" , 2 , testCommentLike);
+
 
             } catch (Exception e) {
                 e.printStackTrace();

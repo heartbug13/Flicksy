@@ -7,6 +7,7 @@ public class User implements Users {
     private String password;
     private List<User> friends;
     private Profile profile;
+    private List<User> blocked;
 
     public User (String username , String password , Profile profile) throws InvalidPasswordException{
         if (password.length() < 12) {
@@ -16,6 +17,7 @@ public class User implements Users {
         this.password = password;
         this.profile = profile;
         this.friends = new ArrayList<>();
+        this.blocked = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -29,12 +31,17 @@ public class User implements Users {
         return friends;
     }
 
-    public void addFriend(User user) {
+    public void addFriend(User user) throws BlockedUserException{
         int verify = 0;
         //checks if there is user is already a friend
         for (User friend : friends) {
             if (friend.equal(user)) {
                 verify++;
+            }
+        }
+        for (User block : blocked) {
+            if (block.equal(user)) {
+                throw new BlockedUserException("you have been blocked by this user");
             }
         }
         if (verify == 0) {
@@ -45,8 +52,23 @@ public class User implements Users {
         friends.remove(user);
     }
     public void blockUser(User user) {
+        int verify = 0;
+        for (User value : blocked) {
+            if (user.equal(value)) {
+                verify++;
+            }
+        }
+
+        if (verify == 0) {
+            blocked.add(user);
+        }
 
     }
+
+    public void unblockUser(User user) {
+        blocked.remove(user);
+    }
+
     public void setPassword(String password) throws InvalidPasswordException{
         if (password.length() < 12) {
             throw new InvalidPasswordException("Password must by 12 characters long");
