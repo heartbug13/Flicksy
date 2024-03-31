@@ -186,63 +186,6 @@ public class TestProgram {
 
                 assertEquals("Ensure your getUsername() method in User.java returns the correct value!" , "Whisper$78" , users.getUsername());
 
-
-
-                /*
-                assertEquals("Ensure your getName() method in AmusementPark.java returns the correct value!", "The Valley Adventure", actName);
-                assertEquals("Ensure your getAdmissionCost() method in AmusementPark.java returns the correct value!", 10.5, actAdmissionCost, 0.01);
-                assertEquals("Ensure your getLand() method in AmusementPark.java returns the correct value!", 100, actLand, 0.01);
-                ArrayList<Ride> expectedRidesCopy = new ArrayList<Ride>();
-                for (Ride r : expectedRides) {
-                    expectedRidesCopy.add(r);
-                }
-                assertEquals("Ensure your isIndoor() method in AmusementPark.java returns the correct value!", true, actIndoor);
-                assertEquals("Ensure your isOutdoor() method in AmusementPark.java returns the correct value!", true, actOutdoor);
-                assertEquals("Ensure your isArcade() method in AmusementPark.java returns the correct value!", false, actArcade);
-                assertEquals("Ensure your isBowling() method in AmusementPark.java returns the correct value!", false, actBowling);
-                for (int i = 0; i < 4; i++) {
-                    assertEquals("Ensure your getSeasons() method in AmusementPark.java returns the correct value!", true, actSeasons[i]);
-                }
-                testAmusement.setName("The Super Valley Adventure");
-                testAmusement.setAdmissionCost(12.80);
-                testAmusement.setArcade(true);
-                testAmusement.setBowling(true);
-                testAmusement.setSeasons(new boolean[]{true, true, true, false});
-                assertEquals("Ensure your setName() method in AmusementPark.java sets name to the correct value!", "The Super Valley Adventure", testAmusement.getName());
-                assertEquals("Ensure your setAdmissionCost() method in AmusementPark.java sets admission cost to the correct value!", 12.80, testAmusement.getAdmissionCost(), 0.01);
-                assertEquals("Ensure your setArcade() method in AmusementPark.java sets arcade to the correct value!", true, testAmusement.isArcade());
-                assertEquals("Ensure your setBowling() method in AmusementPark.java sets bowling to the correct value!", true, testAmusement.isBowling());
-                for (int i = 0; i < 4; i++) {
-                    boolean expectedSeasons = true;
-                    if (i == 3) {
-                        expectedSeasons = false;
-                    }
-                    assertEquals("Ensure your setSeasons() method in AmusementPark.java sets seasons to the correct value!", expectedSeasons, testAmusement.getSeasons()[i]);
-                }
-                Ride newRide = new Rollercoaster("Testing Track", "Orange", 42, 16, false);
-                expectedRidesCopy.add(newRide);
-                try {
-                    testAmusement.addRide(newRide);
-                } catch (WrongRideException e) {
-                    fail("Ensure your addRide() method throws a WrongRideException in the correct situations!");
-                }
-                actRides = testAmusement.getRides();
-                for (int i = 0; i < expectedRidesCopy.size(); i++) {
-                    String expectedName = expectedRidesCopy.get(i).getName();
-                    String expectedColor = expectedRidesCopy.get(i).getColor();
-                    int expectedMinHeight = expectedRidesCopy.get(i).getMinHeight();
-                    int expectedMaxRiders = expectedRidesCopy.get(i).getMaxRiders();
-                    actName = actRides.get(i).getName();
-                    String actColor = actRides.get(i).getColor();
-                    int actMinHeight = actRides.get(i).getMinHeight();
-                    int actMaxRiders = actRides.get(i).getMaxRiders();
-                    assertEquals("Ensure your addRide() method in AmusementPark.java updates the rides instance variable to be a list of rides with the proper names!", expectedName, actName);
-                    assertEquals("Ensure your addRide() method in AmusementPark.java updates the rides instance variable to be a list of rides with the proper colors!", expectedColor, actColor);
-                    assertEquals("Ensure your addRide() method in AmusementPark.java updates the rides instance variable to be a list of rides with the proper minHeight values!", expectedMinHeight, actMinHeight);
-                    assertEquals("Ensure your addRide() method in AmusementPark.java updates the rides instance variable to be a list of rides with the proper maxRiders values!", expectedMaxRiders, actMaxRiders);
-                }
-
-                 */
             } catch (Exception e) {
                 e.printStackTrace();
                 fail();
