@@ -3,16 +3,19 @@ import org.junit.After;
 import java.lang.reflect.Field;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.rules.Timeout;
 
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
+import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 
 import javax.swing.*;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.lang.reflect.InvocationTargetException;
@@ -28,6 +31,7 @@ import static org.junit.Assert.*;
  * @author Purdue CS
  * @version June 13, 2022
  */
+@RunWith(Enclosed.class)
 public class TestProgram {
     public static void main(String[] args) {
         Result result = JUnitCore.runClasses(TestCase.class);
@@ -110,12 +114,17 @@ public class TestProgram {
                 String bioFriend4 = "Hey Rushers! Thanks for all the love and support over the years. Can't wait to rock " +
                         "out with you all at our next concert! Keep chasing those dreams and spreading positivity wherever " +
                         "you go. Remember, we're all in this together!";
+                String bioRemoveAndBlockFriend = "Free-spirited wanderer with a love for stargazing and storytelling. " +
+                        "Whether lost in the pages of a fantasy novel or exploring the cosmos through a telescope, I find " +
+                        "magic in the mysteries of the universe. With a heart full of wanderlust and a mind brimming with " +
+                        "imagination, I chase after dreams like shooting stars, always reaching for the next adventure.";
 
                 Profile profiles = new Profile("Aurora Brooks" , bio);
                 Profiles profileFriend1 = new Profile("Logan Henderson" , bioFriend1);
                 Profiles profileFriend2 = new Profile("James Maslow" , bioFriend2);
                 Profiles profileFriend3 = new Profile("Carlos PenaVega" , bioFriend3);
                 Profiles profileFriend4 = new Profile("Kendall Schmidt" , bioFriend4);
+                Profile profileRemoveAndBlockFriend = new Profile("Maya Rodriguez" , bioRemoveAndBlockFriend);
 
                 String testName = profiles.getName();
                 String testBio = profiles.getBio();
@@ -130,10 +139,41 @@ public class TestProgram {
                 assertEquals("Ensure your setBio() method in Profile}.java sets admission cost to the correct value!", bio2, profiles.getBio());
 
                 User users = new User("FrostyBreeze82", "Sunflower$76" , profiles);
+                User users1 = new User("LoganHenderson4ever", "LoganLover*321" , profiles);
+                User users2 = new User("MaslowOfficial", "MaslowMagic$123" , profiles);
+                User users3 = new User("CarlosPenaVegaFan", "KendallIsAwesome!23" , profiles);
+                User users4 = new User("KendallLover99", "BTRforever#2024" , profiles);
+                User users5 = new User("LunaSky23", "Celestial#42Journey" , profileRemoveAndBlockFriend);
+
+                ArrayList<User> expectedFriendList = new ArrayList<>();
+                expectedFriendList.add(users1);
+                expectedFriendList.add(users2);
+                expectedFriendList.add(users3);
+                expectedFriendList.add(users4);
+                expectedFriendList.add(users5);
 
                 String testUsername = users.getUsername();
                 Profile testProfile = users.getProfile();
+
+                users.addFriend(users1);
+                users.addFriend(users2);
+                users.addFriend(users3);
+                users.addFriend(users4);
+                users.addFriend(users5);
+
                 List<User> testFriendsList = users.getFriends();
+
+                for (int i = 0; i < testFriendsList.size(); i++) {
+                    assertEquals("Ensure your getSeasons() method in AmusementPark.java returns the correct value!", expectedFriendList.get(i), testFriendsList.get(i));
+                }
+
+                expectedFriendList.remove(users5);
+                users.removeFriend(users5);
+
+                for (int i = 0; i < testFriendsList.size(); i++) {
+                    assertEquals("Ensure your getSeasons() method in AmusementPark.java returns the correct value!", expectedFriendList.get(i), testFriendsList.get(i));
+                }
+
                 boolean testVerifyPassword1 = users.verifyPassword("Sunflower$76");
                 boolean testVerifyPassword2 = users.verifyPassword("Sunflower$76123");
 
