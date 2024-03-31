@@ -38,8 +38,8 @@ Interface: Post
 | getComments   | List<Comment> | none             | return a list of comment                    |
 | addComments   | void          | Comment comment  | add a comment to the list of comments       |
 | deleteComment | void          | Comment comment  | removes a comment from the list of comments |
-| like          | void          | none             | ?                                           |
-| dislike       | void          | none             | ?                                           |
+| like          | void          | none             | increases like by one                       |
+| dislike       | void          | none             | increases dislike by one                    |
 
 Interface: Database
 
@@ -60,5 +60,5 @@ Interface: Comment
 | getContent  | String      | none             | returns the content of comment    |
 | getLikes    | int         | none             | returns the amount of likes       |
 | getDislikes | int         | none             | returns the amount of dislikes    |
-| like        | void        | none             | ?                                 |
-| dislike     | void        | none             | ?                                 |
+| like        | void        | none             | increases like by one             |
+| dislike     | void        | none             | increases dislike by one          |
