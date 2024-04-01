@@ -1,9 +1,35 @@
-# CS-180-GroupProject
+# CS 180 GroupProject
 
 Instructions: <br>
-text <br>
+This project implements five different classes, five different interfaces, and two custom exceptions for the backend of our social media platform
+
+<br>
 Name - Submitted Report <br> 
 Name - Submitted Report <br>
+
+<b>
+Excepetion: BlockedUserException
+</b>
+
+extends Exception
+
+Constructor:
+
+| Access Modifier | Constructor Name      | Input Parameters | Description                                                                                  |
+|-----------------|-----------------------|------------------|----------------------------------------------------------------------------------------------|
+| public          | BlockedUserException  | String message   | Calls the constructor of the exception superclass with the message passed in as a parameter  |
+
+<b>
+Excepetion: InvalidPasswordException
+</b>
+
+extends Exception
+
+Constructor:
+
+| Access Modifier | Constructor Name           | Input Parameters | Description                                                                                  |
+|-----------------|----------------------------|------------------|----------------------------------------------------------------------------------------------|
+| public          | InvalidPasswordException   | String message   | Calls the constructor of the exception superclass with the message passed in as a parameter  |
 
 <b>
 Interface: Users
@@ -23,6 +49,8 @@ Interface: Users
 <b>
 Class: User
 </b>
+
+implements Users
 
 Fields:
 
@@ -69,6 +97,8 @@ Interface: Profiles
 Class: Profile
 </b>
 
+implements Profiles
+
 Fields:
 
 | Access Modifier | Field Name | Type       | Description                               |
@@ -110,6 +140,8 @@ Interface: Posts
 <b>
 Class: Post
 </b>
+
+implements Posts
 
 Fields:
 
@@ -159,6 +191,8 @@ Interface: Databases
 Class: Database
 </b>
 
+implements Databases
+
 Fields:
 
 | Access Modifier | Field Name | Type             | Description           |
@@ -199,6 +233,8 @@ Interface: Comments
 <b>
 Class: Comment
 </b>
+
+implements Comment
 
 Fields:
 
