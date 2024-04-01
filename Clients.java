@@ -3,5 +3,4 @@ public interface Clients {
     Profile makeProfile();
     Post makePost();
     Comment makeComment();
-
 }

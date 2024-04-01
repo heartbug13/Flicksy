@@ -263,3 +263,23 @@ Methods:
 | public          | like        | void        | none             | increases like by one                                                                                                       |
 | public          | dislike     | void        | none             | increases dislike by one                                                                                                    |
 | public          | equal       | boolean     | Comment comment  | checks if comment is equal to this.comment <br> <br> comments are considered equal if they have the same content and author |
+
+<b>
+Interface: Clients
+</b>
+
+| Method Name | Return Type | Input Parameters | Description                                   |
+|-------------|-------------|------------------|-----------------------------------------------|
+| makeUser    | User        | none             | Creates a new user and returns the user       |
+| makeProfile | Profile     | none             | Creates a new profile and returns the profile |
+| makePost    | Post        | none             | Creates a new post and returns the post       |
+| makeComment | Comment     | none             | Creates a new comment and returns the comment |
+
+<b>
+Interface: Servers:
+</b>
+
+| Method Name | Return Type | Input Parameters | Description                                                                               |
+|-------------|-------------|------------------|-------------------------------------------------------------------------------------------|
+| writeData   | void        | String filename  | writes all information from database into a file                                          |
+| readData    | void        | String filename  | reads all the information from a text file and stores them into their respective database |
