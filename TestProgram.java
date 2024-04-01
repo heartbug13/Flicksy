@@ -93,16 +93,16 @@ public class TestProgram {
                 String bio = "Adventure seeker and coffee enthusiast. With a passion for exploring the outdoors and " +
                         "capturing moments through photography, I'm always on the lookout for the next breathtaking " +
                         "view. When I'm not hiking or snapping photos, you'll find me immersed in a good book or " +
-                        "experimenting with new recipes in the kitchen. Forever curious and ready for new experiences, " +
-                        "" +
+                        "experimenting with new recipes in the kitchen. Forever curious and ready for new " +
+                        "experiences, " +
                         "I believe in living life to the fullest and embracing every opportunity that comes my way";
                 String bio2 = "Tech-savvy dreamer with a knack for creativity. As a digital artist and avid gamer, " +
                         "I thrive in the virtual realm, constantly pushing the boundaries of imagination. Whether " +
                         "designing digital masterpieces or delving into immersive gaming worlds, I find inspiration " +
                         "in the pixelated landscapes and endless possibilities of cyberspace. Beyond the screen, I'm a"
                         +
-                        " nature enthusiast, finding solace in the tranquility of forests and the majesty of mountains. " +
-                        "" +
+                        " nature enthusiast, finding solace in the tranquility of forests and the majesty of " +
+                        "mountains. " +
                         "With a passion for both the digital and natural worlds, I strive to blend the two in unique " +
                         "and " +
                         "innovative ways, creating experiences that captivate and inspire.";

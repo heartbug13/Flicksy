@@ -30,7 +30,7 @@ public class Database {
             }
         }
         if (verify == 0) {
-           users.add(user);
+            users.add(user);
         }
 
     }
