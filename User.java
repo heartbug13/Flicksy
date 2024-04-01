@@ -9,7 +9,7 @@ public class User implements Users {
     private Profile profile;
     private List<User> blocked;
 
-    public User (String username , String password , Profile profile) throws InvalidPasswordException{
+    public User(String username , String password , Profile profile) throws InvalidPasswordException {
         if (password.length() < 12) {
             throw new InvalidPasswordException("Password must by 12 characters long");
         }
@@ -31,7 +31,7 @@ public class User implements Users {
         return friends;
     }
 
-    public void addFriend(User user) throws BlockedUserException{
+    public void addFriend(User user) throws BlockedUserException {
         int verify = 0;
         //checks if there is user is already a friend
         for (User friend : friends) {
@@ -69,14 +69,14 @@ public class User implements Users {
         blocked.remove(user);
     }
 
-    public void setPassword(String password) throws InvalidPasswordException{
+    public void setPassword(String password) throws InvalidPasswordException {
         if (password.length() < 12) {
             throw new InvalidPasswordException("Password must by 12 characters long");
         }
         this.password = password;
     }
-    public boolean verifyPassword(String password) {
-        return this.password.equals(password);
+    public boolean verifyPassword(String pass) {
+        return this.password.equals(pass);
     }
 
     public boolean equal(User user) {
