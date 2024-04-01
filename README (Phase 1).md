@@ -3,9 +3,10 @@
 Instructions: <br>
 This project implements five different classes, five different interfaces, and two custom exceptions for the backend of our social media platform
 
+
+Name - Submitted Report
 <br>
-Name - Submitted Report <br> 
-Name - Submitted Report <br>
+Name - Submitted Report
 
 <b>
 Excepetion: BlockedUserException
