@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.ArrayList;
@@ -307,6 +308,43 @@ public class TestProgram {
                                 "#BTRForever" , testCommentContent);
                 assertEquals("Ensure your getLikes() method in Post.java returns the correct value!" ,
                         2 , testCommentLike);
+
+                Database database = new Database();
+
+                database.addUser(users);
+                database.addUser(users1);
+                database.addUser(users2);
+                database.addUser(users3);
+                database.addUser(users4);
+                database.addUser(users5);
+                database.addUser(users6);
+
+                database.addPost(post1);
+                database.addPost(post2);
+
+                List<Post> testGetPostByUser = database.getPostsByUser(users);
+                User testGetUserByUsername = database.getUserByUsername("FrostyBreeze82");
+                List<Comment> testGetCommentsForPost = database.getCommentsForPost(post1);
+                List<Post> expectedPost = new ArrayList<>();
+                expectedPost.add(post1);
+
+                Comment comment3 = new Comment(users2 , "Something james would say");
+                database.addCommentToPost(comment3 , post1);
+                expectedComments.add(comment);
+
+                for (int i = 0; i < testGetPostByUser.size(); i++) {
+                    assertEquals("Ensure that your getPostsByUser() is returning the correct value" ,
+                            expectedPost , testGetPostByUser);
+                }
+
+                for (int i = 0; i < testGetCommentsForPost.size(); i++) {
+                    assertEquals("Ensure that your getCommentsForPost() is returning the correct value"
+                            , expectedComments , testGetCommentsForPost);
+                }
+
+                assertEquals("Ensure that your getUsersByUsername() is returning the correct value" ,
+                        users , testGetUserByUsername);
+
 
 
             } catch (Exception e) {
