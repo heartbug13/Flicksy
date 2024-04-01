@@ -70,7 +70,7 @@ public class Database {
         }
         return post;
     }
-    public void addCommendToPost(Comment comment, Post post) {
+    public void addCommentToPost(Comment comment, Post post) {
         for (Post value : posts) {
             if (value.equal(post)) {
                 value.addComment(comment);
