@@ -16,6 +16,10 @@ public class Profile implements Profiles {
         this.bio = bio;
     }
 
+    /**
+     * getter and setter methods for bio and name
+     */
+
     public String getName() {
         return this.name;
     }

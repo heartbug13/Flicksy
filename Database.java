@@ -21,6 +21,11 @@ public class Database {
         posts = new ArrayList<>();
     }
 
+    /**
+     * adds a user to the list of users
+     * first checks if the user is already added to the database
+     */
+
     public void addUser(User user) {
         int verify = 0;
         //checks if there is user is already a friend

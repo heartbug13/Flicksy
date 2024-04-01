@@ -29,6 +29,11 @@ public class User implements Users {
         this.blocked = new ArrayList<>();
     }
 
+    /**
+     * getter methods for username, profile and friends
+     *
+     */
+
     public String getUsername() {
         return username;
     }
@@ -39,6 +44,12 @@ public class User implements Users {
     public List<User> getFriends() {
         return friends;
     }
+
+    /**
+     * adds a friend to the list of friends
+     * checks that the friend is not already a friend
+     * checks that the user is not on the users blocked list
+     */
 
     public void addFriend(User user) throws BlockedUserException {
         int verify = 0;
@@ -57,9 +68,20 @@ public class User implements Users {
             friends.add(user);
         }
     }
+
+    /**
+     * removes the friend from the list of friends
+     */
+
     public void removeFriend(User user) {
         friends.remove(user);
     }
+
+    /**
+     * blocks the user
+     * checks that the user is not already blocked
+     */
+
     public void blockUser(User user) {
         int verify = 0;
         for (User value : blocked) {
@@ -74,9 +96,19 @@ public class User implements Users {
 
     }
 
+    /**
+     * removes the user from the blocked user list
+     */
+
     public void unblockUser(User user) {
         blocked.remove(user);
     }
+
+    /**
+     * sets the password with the inputted string
+     * checks that the password is at least 12 characters long
+     * if the password is less than 12 characters long then the method throws a invalid password exception
+     */
 
     public void setPassword(String password) throws InvalidPasswordException {
         if (password.length() < 12) {
@@ -84,9 +116,19 @@ public class User implements Users {
         }
         this.password = password;
     }
+
+    /**
+     * verifies that the password inputted into the method is the same as the users password
+     */
+
     public boolean verifyPassword(String pass) {
         return this.password.equals(pass);
     }
+
+    /**
+     * checks if the user is equal to user
+     * users are considered equal if they have the same username
+     */
 
     public boolean equal(User user) {
         return username.equals(user.getUsername());
