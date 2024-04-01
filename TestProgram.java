@@ -24,12 +24,14 @@ import java.util.UUID;
 import static org.junit.Assert.*;
 
 /**
- * A framework to run public test cases.
+ * Group Project - Social Media
  *
- * <p>Purdue University -- CS18000 -- Summer 2022</p>
+ * recreates a social media platform
  *
- * @author Purdue CS
- * @version June 13, 2022
+ * @author Samantha Grief, Connor Mccarthy, Ehssan Kanamkandy, Jahiem Cruickshank, L10
+ *
+ * @version April 1, 2024
+ *
  */
 @RunWith(Enclosed.class)
 public class TestProgram {
