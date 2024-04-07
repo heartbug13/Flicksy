@@ -134,4 +134,18 @@ public class User implements Users {
         return username.equals(user.getUsername());
     }
 
+    /**
+     * finds any username that contains the search then
+     * returns the array of all users that match the search
+     */
+    public ArrayList<User> searchFriendsByUsername(String search) {
+        ArrayList<User> foundUsers = new ArrayList<>();
+        for (int i = 0; i < friends.size(); i++) {
+            if (friends.get(i).getUsername().contains(search)) {
+                foundUsers.add(friends.get(i));
+            }
+        }
+        return foundUsers;
+    }
+
 }
