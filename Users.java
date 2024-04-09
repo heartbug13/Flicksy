@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Group Project - Social Media
@@ -20,5 +21,6 @@ public interface Users {
     void blockUser(User user);
     void setPassword(String password) throws InvalidPasswordException;
     boolean verifyPassword(String password);
+    ArrayList<User> searchFriendsByUsername(String search);
 
 }

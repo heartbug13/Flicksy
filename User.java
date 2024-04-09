@@ -141,7 +141,7 @@ public class User implements Users {
     public ArrayList<User> searchFriendsByUsername(String search) {
         ArrayList<User> foundUsers = new ArrayList<>();
         for (int i = 0; i < friends.size(); i++) {
-            if (friends.get(i).getUsername().contains(search)) {
+            if (friends.get(i).getUsername().toLowerCase().contains(search.toLowerCase())) {
                 foundUsers.add(friends.get(i));
             }
         }

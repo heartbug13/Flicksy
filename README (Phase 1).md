@@ -36,16 +36,18 @@ Constructor:
 Interface: Users
 </b>
 
-| Method Name    | Return Type | Input Parameters | Description                                                                |
-|----------------|-------------|------------------|----------------------------------------------------------------------------|
-| getUserName    | String      | none             | returns the username                                                       |
-| getProfile     | Profile     | none             | returns the users profile                                                  |
-| getFriends     | List<User>  | none             | returns a list of friends                                                  |
-| addFriends     | void        | User user        | adds a friend to the list of friends, throws Blocked User Exception        |
-| removeFriends  | void        | User user        | removes a friend from the list of friends                                  |
-| blockUser      | void        | User user        | blocks the user                                                            |
-| setPassword    | void        | String password  | sets the password of the given password, throws Invalid Password Exception |
-| verifyPassword | boolean     | String password  | verifies that the given password is correct                                |
+| Method Name             | Return Type     | Input Parameters | Description                                                                                              |
+|-------------------------|-----------------|------------------|----------------------------------------------------------------------------------------------------------|
+| getUserName             | String          | none             | returns the username                                                                                     |
+| getProfile              | Profile         | none             | returns the users profile                                                                                |
+| getFriends              | List<User>      | none             | returns a list of friends                                                                                |
+| addFriends              | void            | User user        | adds a friend to the list of friends, throws Blocked User Exception                                      |
+| removeFriends           | void            | User user        | removes a friend from the list of friends                                                                |
+| blockUser               | void            | User user        | blocks the user                                                                                          |
+| setPassword             | void            | String password  | sets the password of the given password, throws Invalid Password Exception                               |
+| verifyPassword          | boolean         | String password  | verifies that the given password is correct                                                              |
+| equals                  | boolean         | User user        | checks if user is equal to this.user <br> <br> user are considered equal if they have the same username  |
+| searchFriendsByUsername | ArrayList<User> | String search    | searches for any friends that contains the search string in the friends username                         |
 
 <b>
 Class: User
@@ -71,17 +73,18 @@ Constructor:
 
 Methods:
 
-| Access Modifiers | Method Name    | Return Type | Input Parameters | Description                                                                                                                                                                                              |
-|------------------|----------------|-------------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| public           | getUserName    | String      | none             | returns the username                                                                                                                                                                                     |
-| public           | getProfile     | Profile     | none             | returns the users profile                                                                                                                                                                                |
-| public           | getFriends     | List<User>  | none             | returns a list of friends                                                                                                                                                                                |
-| public           | addFriends     | void        | User user        | checks that the user is not already in the friend list <br> <br> checks if the user is blocked by user, if the user is blocked throw a Blocked User Exception <br> <br> adds user to the list of friends |
-| public           | removeFriends  | void        | User user        | removes a friend from the list of friends                                                                                                                                                                |
-| public           | blockUser      | void        | User user        | blocks the user                                                                                                                                                                                          |
-| public           | setPassword    | void        | String password  | sets the password of the given password, throws Invalid Password Exception                                                                                                                               |
-| public           | verifyPassword | boolean     | String password  | verifies that the given password is correct                                                                                                                                                              |
-| public           | equal          | boolean     | User user        | checks if user is equal to this.user <br> <br> user are considered equal if they have the same username                                                                                                  |
+| Access Modifiers | Method Name             | Return Type     | Input Parameters | Description                                                                                                                                                                                              |
+|------------------|-------------------------|-----------------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| public           | getUserName             | String          | none             | returns the username                                                                                                                                                                                     |
+| public           | getProfile              | Profile         | none             | returns the users profile                                                                                                                                                                                |
+| public           | getFriends              | List<User>      | none             | returns a list of friends                                                                                                                                                                                |
+| public           | addFriends              | void            | User user        | checks that the user is not already in the friend list <br> <br> checks if the user is blocked by user, if the user is blocked throw a Blocked User Exception <br> <br> adds user to the list of friends |
+| public           | removeFriends           | void            | User user        | removes a friend from the list of friends                                                                                                                                                                |
+| public           | blockUser               | void            | User user        | blocks the user                                                                                                                                                                                          |
+| public           | setPassword             | void            | String password  | sets the password of the given password, throws Invalid Password Exception                                                                                                                               |
+| public           | verifyPassword          | boolean         | String password  | verifies that the given password is correct                                                                                                                                                              |
+| public           | equal                   | boolean         | User user        | checks if user is equal to this.user <br> <br> user are considered equal if they have the same username                                                                                                  |
+| public           | searchFriendsByUsername | ArrayList<User> | String search    | searches for any friends that contains the search string in the friends username                                                                                                                         |
 
 <b>
 Interface: Profiles
