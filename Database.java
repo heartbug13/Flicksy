@@ -26,7 +26,7 @@ public class Database {
      * first checks if the user is already added to the database
      */
 
-    public void addUser(User user) {
+    public synchronized void addUser(User user) {
         int verify = 0;
         //checks if there is user is already a friend
         for (User value : users) {
@@ -49,7 +49,7 @@ public class Database {
         return foundUser;
     }
 
-    public void addPost(Post post) {
+    public synchronized void addPost(Post post) {
         int verify = 0;
         for (int i = 0; i < posts.size(); i++) {
             if (posts.get(i).equal(post)) {
@@ -70,7 +70,7 @@ public class Database {
         }
         return post;
     }
-    public void addCommentToPost(Comment comment, Post post) {
+    public synchronized void addCommentToPost(Comment comment, Post post) {
         for (Post value : posts) {
             if (value.equal(post)) {
                 value.addComment(comment);
