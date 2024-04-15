@@ -1,7 +1,7 @@
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Group Project - Social Media
@@ -15,11 +15,6 @@ import java.net.Socket;
  */
 
 public class Client implements Clients {
-    private User makeUser;
-    private Profile makeProfile;
-    private Post makePost;
-    private Comment makeComment;
-
 
     private Socket socket;
     private ObjectOutputStream outputStream;
@@ -55,8 +50,11 @@ public class Client implements Clients {
         return inputStream.readObject();
     }
 
-    
-     @Override
+    public void close() throws IOException {
+        socket.close();
+    }
+
+    @Override
     public User makeUser() {
         return null;
     }
@@ -75,5 +73,7 @@ public class Client implements Clients {
     public Comment makeComment() {
         return null;
     }
+
+    //Can also implement additional methods to interact with server as needed here
 
 }
