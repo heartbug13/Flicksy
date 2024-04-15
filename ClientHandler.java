@@ -1,6 +1,16 @@
-
 import java.io.*;
 import java.net.*;
+
+/**
+ * Group Project - Social Media
+ *
+ * recreates a social media platform
+ *
+ * @author Samantha Grief, Connor Mccarthy, Ehssan Kanamkandy, Jahiem Cruickshank, L10
+ *
+ * @version April 14, 2024
+ *
+ */
 
 public class ClientHandler implements Runnable {
 
