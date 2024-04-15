@@ -4,9 +4,10 @@ Instructions: <br>
 This project implements five different classes, five different interfaces, and two custom exceptions for the backend of our social media platform
 
 
-Name - Submitted Report
+Samantha Grief - Submitted Code
 <br>
-Name - Submitted Report
+
+<h2> Phase 1</h2>
 
 <b>
 Excepetion: BlockedUserException
@@ -282,7 +283,89 @@ Interface: Clients
 Interface: Servers:
 </b>
 
-| Method Name | Return Type | Input Parameters | Description                                                                               |
-|-------------|-------------|------------------|-------------------------------------------------------------------------------------------|
-| writeData   | void        | String filename  | writes all information from database into a file                                          |
-| readData    | void        | String filename  | reads all the information from a text file and stores them into their respective database |
+| Method Name    | Return Type | Input Parameters | Description                                                                                                                                   |
+|----------------|-------------|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| findFreeThread | int         | none             | goes through the entire array of client threads and returns the index of a free thread, if there is no thread available the method returns -1 |
+| shutDown       | void        | none             | goes through the entire list of threads and stops the thread when the server socket closes, the server socket is then closed                  |
+
+<h2> Phase 2</h2>
+
+<b>
+Class: Clients
+</b>
+
+Fields:
+
+| Access Modifier | Field Name   | Type               | Description           |
+|-----------------|--------------|--------------------|-----------------------|
+| private         | socket       | Socket             | list of all the users |
+| private         | outputStream | ObjectOutputStream | list of all the posts |
+| private         | inputStream  | ObjectInputStream  | amount of likes       |
+
+Constructor:
+
+| Access Modifier | Constructor Name | Input Parameters                     | Description                                                                                                                |
+|-----------------|------------------|--------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| public          | Client           | String serverAddress, int serverPort | Constructs a new Client and initiates the socket with the given parameters, and creates an object output and input stream  |
+
+
+Methods:
+
+| Access Modifier | Method Name | Return Type | Input Parameters | Description                                   |
+|-----------------|-------------|-------------|------------------|-----------------------------------------------|
+| public          | makeUser    | User        | none             | Creates a new user and returns the user       |
+| public          | makeProfile | Profile     | none             | Creates a new profile and returns the profile |
+| public          | makePost    | Post        | none             | Creates a new post and returns the post       |
+| public          | makeComment | Comment     | none             | Creates a new comment and returns the comment |
+
+<b>
+Class: Server
+</b>
+
+Fields:
+
+| Access Modifier | Field Name   | Type         | Description                                                    |
+|-----------------|--------------|--------------|----------------------------------------------------------------|
+| private final   | port         | int          | port number of the server <br> initiated to 8080               |
+| private final   | MAX_THREADS  | int          | max number of threads our program allows <br> initiated to 100 |
+| private static  | threads      | Thread[]     | array of all the clients threads                               |
+| private static  | serverSocket | ServerSocket | creates a socket for the server                                |
+
+Constructor:
+
+| Access Modifier | Constructor Name | Input Parameters | Description                                                                 |
+|-----------------|------------------|------------------|-----------------------------------------------------------------------------|
+| public          | Server           | none             | Constructs a new Server and inmates the threads array and the server socket |
+
+
+Methods:
+
+| Access Modifier | Method Name    | Return Type | Input Parameters | Description                                                                                                                                                                                                                                                                                                                                          |
+|-----------------|----------------|-------------|------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| public          | run            | void        | none             | run methods for server <br> server socket accepts client sockets unless the thread is interrupted <br> first checks if there is an available thread for the client <br> if there is a thread available, inisiates a new thread and adds it the array of threads <br> if there is no thread available the terminal prints "No free threads available" |
+| public          | findFreeThread | int         | none             | goes through the entire array of client threads and returns the index of a free thread, if there is no thread available the method returns -1                                                                                                                                                                                                        |
+| public          | shutdown       | void        | none             | goes through the entire list of threads and stops the thread when the server socket closes, the server socket is then closed                                                                                                                                                                                                                         |
+| public          | main           | void        | String[] args    | creates a server object and a thread for the server, the server thread is then started                                                                                                                                                                                                                                                               |
+
+<b>
+Class: ClientHandler
+</b>
+
+Fields:
+
+| Access Modifier | Field Name   | Type   | Description                                             |
+|-----------------|--------------|--------|---------------------------------------------------------|
+| private final   | clientSocket | Socket | socket for the client that gets connected to the server |
+
+Constructor:
+
+| Access Modifier | Constructor Name | Input Parameters    | Description                                                                             |
+|-----------------|------------------|---------------------|-----------------------------------------------------------------------------------------|
+| public          | ClientHandler    | Socket clientSocket | Constructs a new ClientHandler and initiates the fields to their respective parameters  |
+
+
+Methods:
+
+| Access Modifier | Method Name    | Return Type | Input Parameters | Description                                                                                                              |
+|-----------------|----------------|-------------|------------------|--------------------------------------------------------------------------------------------------------------------------|
+| public          | run            | void        | none             | run methods for client handler <br> uses a buffered reader and print writer to read and send information from the server |

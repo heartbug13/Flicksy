@@ -31,6 +31,7 @@ public class ClientHandler implements Runnable {
 
                 System.out.println("Received from client: " + inputLine);
                 writer.println("Server received: " + inputLine);
+                writer.flush();
             }
 
         } catch (IOException e) {
