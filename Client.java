@@ -44,6 +44,7 @@ public class Client implements Clients {
 
     public void sendMessageToServer(Object message) throws IOException {
         outputStream.writeObject(message);
+        outputStream.flush();
     }
 
     public Object receiveMessageFromServer() throws IOException, ClassNotFoundException {

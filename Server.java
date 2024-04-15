@@ -2,6 +2,17 @@ import java.io.*;
 import java.net.*;
 import java.util.concurrent.*;
 
+/**
+ * Group Project - Social Media
+ *
+ * recreates a social media platform
+ *
+ * @author Samantha Grief, Connor Mccarthy, Ehssan Kanamkandy, Jahiem Cruickshank, L10
+ *
+ * @version April 14, 2024
+ *
+ */
+
 public class Server implements Runnable{
     //Field declarations, port set to 8080, MAX_THREADS set to 100
     private static final int port = 8080;
@@ -19,6 +30,7 @@ public class Server implements Runnable{
     public void run() {
         //implements the run method
         // Waits for and accepts connection from a user
+
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 Socket clientSocket = serverSocket.accept();
@@ -72,6 +84,7 @@ public class Server implements Runnable{
         try{
             Server server = new Server();
             Thread serverThread = new Thread(server);
+            serverThread.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
