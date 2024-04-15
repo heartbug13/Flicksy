@@ -330,6 +330,80 @@ public class TestProgram {
                 fail();
             }
         }
+
+        @Test(timeout = 1000)
+        public void testClient() {
+
+            String jessBio = "Hey there! I'm Jess, your resident quirky school teacher with a love for all things " +
+                    "vintage and a knack for getting into awkward situations. When I'm not grading papers or " +
+                    "singing in my room, you can find me baking cookies or binge-watching true crime documentaries. " +
+                    "Let's be friends and share some laughs!";
+            String nickBio = "Sup, I'm Nick. The grumpiest bartender in town with a heart of gold buried under " +
+                    "layers of sarcasm. My hobbies include drinking beer, avoiding responsibilities, and " +
+                    "occasionally attempting to write the next great American novel (emphasis on \"attempting\")." +
+                    " Hit me up if you need someone to complain about life with or if you're down for a game of " +
+                    "True American.";
+            String schmidtBio = "Greetings, fellow humans. Schmidt here, the epitome of style, sophistication, " +
+                    "and slight neuroticism. By day, I'm a marketing whiz, by night, a connoisseur of fine linens " +
+                    "and artisanal cheeses. I'm on a never-ending quest for self-improvement, whether it's " +
+                    "perfecting my hair or mastering the art of smooth-talking. Join me on my journey to " +
+                    "greatness, won't you?";
+            String winstonBio = "Hey, I'm Winston, your friendly neighborhood prankster and former basketball pro " +
+                    "turned cat enthusiast. Life's too short to be serious all the time, am I right? When I'm not " +
+                    "pulling pranks or playing with my furry roommates, I'm probably trying to figure out the " +
+                    "meaning of adulthood or attempting some new hobby I saw on YouTube. Let's hang out and see " +
+                    "where the day takes us!";
+            String ceceBio = "Hello, beautiful people! It's Cece, your favorite fashion model and occasional" +
+                    " life coach. I may look like I have it all together, but trust me, I've had my fair share " +
+                    "of ups and downs. When I'm not strutting down the runway or posing for the camera, I'm " +
+                    "probably binge-watching reality TV or indulging in some much-needed self-care. Let's slay " +
+                    "the day together, shall we?";
+            String postContent = "Greetings, adventurers! Today marked a monumental milestone as I embarked on " +
+                    "a daring mountain climbing expedition. With each step, I embraced the challenge, conquering " +
+                    "obstacles and pushing past fears. The breathtaking views and camaraderie with fellow climbers " +
+                    "fueled my determination. Standing atop the summit, surrounded by nature's splendor, I felt a " +
+                    "profound sense of accomplishment and gratitude. This journey reaffirmed my belief in the power " +
+                    "of perseverance and the beauty of embracing the unknown. As I descend, I carry with me newfound " +
+                    "strength and endless possibilities. Here's to scaling new heights—both on mountains and in " +
+                    "life. Adventure awaits!";
+            String commentContent = "He, you, Cee, what up fam? It's your girl Winston aka Winnie the Bish " +
+                    "aka-aka-aka Brown Lighting, Schmidt dropped Fawn like a bad habit, okay, so ain't nobody " +
+                    "riding shotgun. So you better get on while the getting is good. You got it?";
+
+            try {
+                Profile jessProfile = new Profile("Jessica Day" , jessBio);
+                Profile nickProfile = new Profile ("Nick Miller" , nickBio);
+                Profile winstonProfile = new Profile("Winston Bishop" , winstonBio);
+                Profile ceceProfile = new Profile("Cece Parekh" , ceceBio);
+
+                User jess = new User("quirkyJess" , "Sunshine1234!" , jessProfile);
+                User winston = new User("prankSinatra" , "Prankster7777!" , winstonProfile);
+                User cece = new User("chicCece" , "ModelLife1234!" , ceceProfile);
+
+                Client testClient = new Client("localhost" , 8080);
+                User testMakeUser = testClient.makeUser("quirkyJess" , "Sunshine1234!" , jessProfile);
+                Profile testMakeProfile = testClient.makeProfile("Nick Miller" , nickBio);
+                Post testMakePost = testClient.makePost(cece , postContent);
+                Comment testMakeComment = testClient.makeComment(winston , commentContent);
+
+                Post expectedPost = new Post(cece , postContent);
+                Comment expectedComment = new Comment(winston , commentContent);
+
+                assertEquals("Ensure that your makeUser() is returning the correct value" ,
+                        jess , testMakeUser);
+                assertEquals("Ensure that your makeProfile() is returning the correct value" ,
+                        nickProfile , testMakeProfile);
+                assertEquals("Ensure that your makePost() is returning the correct value" ,
+                        expectedPost , testMakePost);
+                assertEquals("Ensure that your makeComment() is retunring the correct value" ,
+                        expectedComment , testMakeComment);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 }
 
