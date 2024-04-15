@@ -20,7 +20,7 @@ public class User implements Users {
 
     public User(String username , String password , Profile profile) throws InvalidPasswordException {
         if (password.length() < 12) {
-            throw new InvalidPasswordException("Password must by 12 characters long");
+            throw new InvalidPasswordException("Password must be 12 characters long");
         }
         this.username = username;
         this.password = password;
