@@ -21,12 +21,21 @@ public class Client implements Clients {
     private ObjectInputStream inputStream;
 
     public Client(String serverAddress, int serverPort) throws IOException {
-        this.socket = new Socket(serverAddress, serverPort);
-        this.outputStream = new ObjectOutputStream(socket.getOutputStream());
-        this.inputStream = new ObjectInputStream(socket.getInputStream());
+        try {
+            this.socket = new Socket(serverAddress, serverPort);
+            this.outputStream = new ObjectOutputStream(socket.getOutputStream());
+            this.inputStream = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            System.out.println("Error connecting to server: " + e.getMessage());
+        }
+
+
     }
 
     public User makeUser(String username, String password, Profile profile) throws InvalidPasswordException {
+        if (password == null) {
+            throw new InvalidPasswordException("Please input a password!");
+        }
         return new User(username, password, profile);
     }
 
@@ -43,16 +52,42 @@ public class Client implements Clients {
     }
 
     public void sendMessageToServer(Object message) throws IOException {
-        outputStream.writeObject(message);
-        outputStream.flush();
+        try {
+            outputStream.writeObject(message);
+            outputStream.flush();
+        } catch (IOException e ) {
+            System.out.println("Error Sending message to server: " + e.getMessage());
+            throw e;
+        }
+
     }
 
     public Object receiveMessageFromServer() throws IOException, ClassNotFoundException {
-        return inputStream.readObject();
+        try {
+            return inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error recieving message from server: " + e.getMessage());
+        }
+
     }
 
     public void close() throws IOException {
-        socket.close();
+        try {
+            if (socket != null) {
+                socket.close();
+            }
+            if (outputStream != null) {
+                outputStream.close();
+            }
+            if (inputStream != null) {
+                inputStream.close();
+            }
+
+
+        } catch (IOException e) {
+            System.out.println("Error closing the client system resources");
+        }
+
     }
 
     @Override
