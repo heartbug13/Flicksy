@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * Group Project - Social Media
  *
@@ -9,7 +11,7 @@
  *
  */
 
-public class Comment implements Comments {
+public class Comment implements Comments , Serializable {
     private User author;
     private String content;
     private int likes;
@@ -31,8 +33,15 @@ public class Comment implements Comments {
     public int getLikes() {
         return this.likes;
     }
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
     public int getDislikes() {
         return this.dislikes;
+    }
+
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
     }
 
     public void like() {
@@ -44,6 +53,11 @@ public class Comment implements Comments {
 
     public boolean equal(Comment comment) {
         return content.equals(comment.getContent()) && author.equal(comment.getAuthor());
+    }
+
+    public String toString() {
+        return String.format("Author: %s\nContent: %s\nLikes: %d\nDislikes: %d" ,
+                author.getUsername() , content , likes , dislikes);
     }
 
 }
