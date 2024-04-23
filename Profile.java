@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * Group Project - Social Media
  *
@@ -8,7 +10,7 @@
  * @version April 1, 2024
  *
  */
-public class Profile implements Profiles {
+public class Profile implements Profiles , Serializable {
     private String name;
     private String bio;
     public Profile(String name, String bio) {
