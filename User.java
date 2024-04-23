@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @version April 1, 2024
  *
  */
-public class User implements Users {
+public class User implements Users , Serializable {
 
     private String username;
     private String password;
@@ -18,9 +19,14 @@ public class User implements Users {
     private Profile profile;
     private List<User> blocked;
 
-    public User(String username , String password , Profile profile) throws InvalidPasswordException {
+    public User(String username , String password , Profile profile) throws InvalidPasswordException, InvalidUserException {
+        //System.out.println("haldkhf");
         if (password.length() < 12) {
             throw new InvalidPasswordException("Password must be 12 characters long");
+        }
+        int index = username.indexOf("-");
+        if (index != -1) {
+            throw new InvalidUserException("Usernames are not allowed to include \"-\"");
         }
         this.username = username;
         this.password = password;
@@ -104,6 +110,10 @@ public class User implements Users {
         blocked.remove(user);
     }
 
+    public List<User> getBlocked() {
+        return blocked;
+    }
+
     /**
      * sets the password with the inputted string
      * checks that the password is at least 12 characters long
@@ -112,7 +122,7 @@ public class User implements Users {
 
     public void setPassword(String password) throws InvalidPasswordException {
         if (password.length() < 12) {
-            throw new InvalidPasswordException("Password must by 12 characters long");
+            throw new InvalidPasswordException("Password must be 12 characters long");
         }
         this.password = password;
     }
@@ -146,6 +156,11 @@ public class User implements Users {
             }
         }
         return foundUsers;
+    }
+
+    public String toString() {
+        return String.format("Name: %s\nBio: %s\nUsername: %s\nPassword: %s" , profile.getName() ,
+                profile.getBio() , username , password);
     }
 
 }
