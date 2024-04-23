@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @version April 1, 2024
  *
  */
-public class Post implements Posts {
+public class Post implements Posts , Serializable {
     private User author;
     private String content;
     private int likes;
@@ -38,8 +39,14 @@ public class Post implements Posts {
     public int getLikes() {
         return this.likes;
     }
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
     public int getDislikes() {
         return this.dislikes;
+    }
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
     }
     public List<Comment> getComments() {
         return this.comments;
@@ -75,4 +82,10 @@ public class Post implements Posts {
     public boolean equal(Post post) {
         return author.equals(post.getAuthor()) && content.equals(post.getContent());
     }
+
+    public String toString() {
+        return String.format("Author: %s\nContent: %s\nLikes: %d\nDislikes: %d",
+                author.getUsername() , content , likes , dislikes);
+    }
+
 }
