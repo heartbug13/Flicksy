@@ -16,9 +16,9 @@ public interface Users {
     Profile getProfile();
     List<User> getFriends();
 
-    void addFriend(User user) throws BlockedUserException;
+    void addFriend(User user) throws BlockedUserException , AlreadyAddedException;
     void removeFriend(User user);
-    void blockUser(User user);
+    void blockUser(User user) throws AlreadyAddedException;
     void setPassword(String password) throws InvalidPasswordException;
     boolean verifyPassword(String password);
     ArrayList<User> searchFriendsByUsername(String search);

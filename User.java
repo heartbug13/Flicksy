@@ -57,12 +57,12 @@ public class User implements Users , Serializable {
      * checks that the user is not on the users blocked list
      */
 
-    public void addFriend(User user) throws BlockedUserException {
+    public void addFriend(User user) throws BlockedUserException , AlreadyAddedException{
         int verify = 0;
         //checks if there is user is already a friend
         for (User friend : friends) {
             if (friend.equal(user)) {
-                verify++;
+                throw new AlreadyAddedException("you have already added this user as a friend");
             }
         }
         for (User block : blocked) {
@@ -70,9 +70,7 @@ public class User implements Users , Serializable {
                 throw new BlockedUserException("you have been blocked by this user");
             }
         }
-        if (verify == 0) {
-            friends.add(user);
-        }
+        friends.add(user);
     }
 
     /**
@@ -88,17 +86,15 @@ public class User implements Users , Serializable {
      * checks that the user is not already blocked
      */
 
-    public void blockUser(User user) {
+    public void blockUser(User user) throws AlreadyAddedException {
         int verify = 0;
         for (User value : blocked) {
             if (user.equal(value)) {
-                verify++;
+                throw new AlreadyAddedException("you have already blocked this user");
             }
         }
 
-        if (verify == 0) {
-            blocked.add(user);
-        }
+        blocked.add(user);
 
     }
 
@@ -161,6 +157,24 @@ public class User implements Users , Serializable {
     public String toString() {
         return String.format("Name: %s\nBio: %s\nUsername: %s\nPassword: %s" , profile.getName() ,
                 profile.getBio() , username , password);
+    }
+
+    public boolean isFriend(User user) {
+        for (int i = 0; i < friends.size(); i++) {
+            if (friends.get(i).getUsername().equals(user.getUsername())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isBlocked(User user) {
+        for (int i = 0; i < blocked.size(); i++) {
+            if (blocked.get(i).getUsername().equals(user.getUsername())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

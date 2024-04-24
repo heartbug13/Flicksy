@@ -91,7 +91,6 @@ public class Server{
         Database database = new Database();
         database.readDatabase();
 
-
         try {
             Server server = new Server();
             while (!Thread.currentThread().isInterrupted()) {

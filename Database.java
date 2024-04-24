@@ -1,3 +1,4 @@
+import javax.naming.directory.SearchResult;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +89,37 @@ public class Database {
         return comments;
     }
 
+    public ArrayList<User> searchByString(String search) {
+        ArrayList<User> temp = new ArrayList<>();
+
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().toLowerCase().contains(search.toLowerCase())) {
+                temp.add(users.get(i));
+            }
+        }
+        if (!temp.isEmpty()) {
+            return temp;
+        } else {
+            return null;
+        }
+
+    }
+
+    public void addFriend(User user , User friend) throws AlreadyAddedException, BlockedUserException {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).equal(user)) {
+                users.get(i).addFriend(friend);
+            }
+        }
+    }
+    public void removeFriend(User user , User friend) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).equal(user)) {
+                users.get(i).removeFriend(friend);
+            }
+        }
+    }
+
     public void writeDatabase() {
         try {
             PrintWriter pw = new PrintWriter(new FileWriter("userFiles"));
@@ -116,14 +148,34 @@ public class Database {
             }
 
             pw = new PrintWriter(new FileWriter("friendFiles"));
+            new FileWriter("friendFiles", false).close();
             for (int i = 0; i < users.size(); i++) {
+                System.out.println(users.get(i));
+                int verify = 0;
                 for (int j = 0; j < users.get(i).getFriends().size(); j++) {
                     if (j == 0) {
+                        verify++;
                         pw.println("Username: " + users.get(i).getUsername());
+                        System.out.println("User " + users.get(i).getUsername());
                     }
+                    System.out.println("Friends " + users.get(i).getFriends());
                     pw.println("FriendUsername: " + users.get(i).getFriends().get(j).getUsername());
                 }
-                pw.println();
+
+                for (int k = 0; k < users.get(i).getBlocked().size(); k++) {
+                    if (verify == 0) {
+                        pw.println("Username: " + users.get(i).getUsername());
+                        verify++;
+                    }
+
+                    pw.println("BlockedUsername: " + users.get(i).getFriends().get(k).getUsername());
+
+                }
+
+                if (!users.get(i).getFriends().isEmpty()) {
+                    pw.println();
+                }
+                System.out.println();
             }
 
             pw.close();
@@ -239,21 +291,40 @@ public class Database {
 
             bfr = new BufferedReader(new FileReader("friendFiles"));
 
+            System.out.println("reading friend file");
+            System.out.println();
             User main = null;
             int index = 0;
             while ((line = bfr.readLine()) != null) {
                 index = line.indexOf(" ");
-                if (line.contains("Username") && !line.contains("Friends")) {
+                //System.out.println("line: " + line);
+                //System.out.println(line.contains("Friends"));
+                if (line.contains("Username") && !line.contains("Friend")) {
                     username = line.substring(index + 1);
+                    //System.out.println(username);
                     main = getUserByUsername(username);
+                    //System.out.println(main);
                 } else if (line.contains("FriendUsername")) {
                     username = line.substring(index + 1);
+                    //System.out.println(username);
                     User friend = getUserByUsername(username);
+                    //System.out.println(friend);
+                    //System.out.println(main);
                     if (main != null) {
-                        main.addFriend(friend);
+                        //System.out.println("User \n\n" + getUserByUsername(main.getUsername()));
+                        getUserByUsername(main.getUsername()).addFriend(friend);
+                    }
+                } else if (line.contains("BlockedUsername")) {
+                    username = line.substring(index + 1);
+                    User blocked = getUserByUsername(username);
+                    if (main != null) {
+                        getUserByUsername(main.getUsername()).blockUser(blocked);
                     }
                 }
+                //System.out.println();
             }
+
+            //System.out.println(getUserByUsername("quirkyJess").getFriends());
 
 
             bfr.close();

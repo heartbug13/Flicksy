@@ -1,6 +1,8 @@
 import java.io.*;
 import java.net.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Group Project - Social Media
@@ -75,8 +77,17 @@ public class ClientHandler implements Runnable , Serializable{
                             outputStream.flush();
                         }
 
+                        List<Post> postByUser = database.getPostsByUser(checkUser);
+                        outputStream.writeObject(postByUser.size());
+                        outputStream.flush();
+
+                        for (int i = 0; i < postByUser.size(); i++) {
+                            outputStream.writeObject(postByUser.get(i));
+                            outputStream.flush();
+                        }
+
                     } else {
-                        //System.out.println("false password");
+                        System.out.println("false password");
                         //writer.println("false");
                         //writer.flush();
                         outputStream.writeObject("false");
@@ -125,6 +136,139 @@ public class ClientHandler implements Runnable , Serializable{
                     database.getPosts().get(postIndex).addComment(comment);
 
                     database.writeDatabase();
+                } else if (inputLine.equals("add post")) {
+                    Post post = (Post) inputStream.readObject();
+                    database.addPost(post);
+                    database.writeDatabase();
+                } else if (inputLine.equals("search")) {
+                    String search = (String) inputStream.readObject();
+                    ArrayList<User> searchResult = database.searchByString(search);
+                    if (searchResult == null) {
+                        outputStream.writeObject(0);
+                    } else {
+                        outputStream.writeObject(searchResult.size());
+                        outputStream.flush();
+                        for (int i = 0; i < searchResult.size(); i++) {
+                            outputStream.writeObject(searchResult.get(i).getUsername());
+                            outputStream.flush();
+                        }
+                    }
+                } else if (inputLine.equals("find user based on username")) {
+                    String username = (String) inputStream.readObject();
+                    User foundUser = database.getUserByUsername(username);
+                    outputStream.writeObject(foundUser);
+                    outputStream.flush();
+                } else if (inputLine.equals("friend")) {
+                    String username = (String) inputStream.readObject();
+                    User user = (User) inputStream.readObject();
+                    //System.out.println("username: " + username);
+
+                    User friend = database.getUserByUsername(username);
+                    //System.out.println("add friend " + friend);
+                    if (friend != user) {
+                        try {
+                            database.getUserByUsername(user.getUsername()).addFriend(friend);
+                            //System.out.println(user.getFriends());
+                            outputStream.writeObject("adding a friend");
+                            outputStream.writeObject(friend);
+                            outputStream.flush();
+                            database.writeDatabase();
+                        } catch (BlockedUserException | AlreadyAddedException e) {
+                            outputStream.writeObject(e.getMessage());
+                            outputStream.flush();
+                            e.printStackTrace();
+                        }
+                    } else {
+                        outputStream.writeObject("friend and user are equal");
+                        outputStream.flush();
+                    }
+                } else if (inputLine.equals("unfriend")) {
+                    String username = (String) inputStream.readObject();
+                    User user = (User) inputStream.readObject();
+                    //System.out.println("username: " + username);
+
+                    User friend = database.getUserByUsername(username);
+                    //System.out.println("add friend " + friend);
+                    if (friend != user) {
+                        database.getUserByUsername(user.getUsername()).removeFriend(friend);
+                        //System.out.println(user.getFriends());
+                        outputStream.writeObject("adding a friend");
+                        outputStream.writeObject(friend);
+                        outputStream.flush();
+                        database.writeDatabase();
+                    } else {
+                        outputStream.writeObject("friend and user are equal");
+                        outputStream.flush();
+                    }
+                } else if (inputLine.equals("find post by user")) {
+                    String username = (String) inputStream.readObject();
+                    User user = database.getUserByUsername(username);
+                    List<Post> usersPost = database.getPostsByUser(user);
+
+                    outputStream.writeObject(usersPost.size());
+                    outputStream.flush();
+
+                    for (int i = 0; i < usersPost.size(); i++) {
+                        outputStream.writeObject(usersPost.get(i));
+                        outputStream.flush();
+                    }
+
+                } else if (inputLine.equals("block")) {
+                    String username = (String) inputStream.readObject();
+                    User user = (User) inputStream.readObject();
+
+                    User blocked = database.getUserByUsername(username);
+
+                    try {
+                        database.getUserByUsername(user.getUsername()).blockUser(user);
+
+                        outputStream.writeObject("blocking user");
+                        outputStream.writeObject(blocked);
+                        outputStream.flush();
+
+                    } catch (AlreadyAddedException e) {
+                        outputStream.writeObject(e.getMessage());
+                        outputStream.flush();
+                    }
+
+                    database.writeDatabase();
+
+                } else if (inputLine.equals("unblock")) {
+                    String username = (String) inputStream.readObject();
+                    User user = (User) inputStream.readObject();
+
+                    User unBlocked = database.getUserByUsername(username);
+                    database.getUserByUsername(user.getUsername()).unblockUser(unBlocked);
+
+                    outputStream.writeObject(unBlocked);
+                    outputStream.flush();
+
+                    database.writeDatabase();
+
+                } else if (inputLine.equals("make profile")) {
+                    System.out.println("hello");
+                    String bio = (String) inputStream.readObject();
+                    String name = (String) inputStream.readObject();
+                    String username = (String) inputStream.readObject();
+
+                    database.getUserByUsername(username).getProfile().setName(name);
+                    database.getUserByUsername(username).getProfile().setBio(bio);
+                    database.writeDatabase();
+
+                    List<Post> posts = database.getPosts();
+                    outputStream.writeObject(posts.size());
+                    outputStream.flush();
+
+                    for (int i = 0; i < posts.size(); i++) {
+                        outputStream.writeObject(posts.get(i));
+                        outputStream.flush();
+                    }
+
+                } else if (inputLine.equals("close server")) {
+                    outputStream.close();
+                    inputStream.close();
+                    clientSocket.close();
+                    return;
                 }
             }
 

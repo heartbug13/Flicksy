@@ -15,6 +15,7 @@ import javax.swing.*;
 import javax.xml.crypto.Data;
 import java.io.*;
 import java.lang.reflect.*;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -380,7 +381,8 @@ public class TestProgram {
                 User winston = new User("prankSinatra" , "Prankster7777!" , winstonProfile);
                 User cece = new User("chicCece" , "ModelLife1234!" , ceceProfile);
 
-                Client testClient = new Client("localhost" , 8080);
+                Socket socket = new Socket("Localhost" , 8080);
+                Client testClient = new Client(socket);
                 User testMakeUser = testClient.makeUser("quirkyJess" , "Sunshine1234!" , jessProfile);
                 Profile testMakeProfile = testClient.makeProfile("Nick Miller" , nickBio);
                 Post testMakePost = testClient.makePost(cece , postContent);
