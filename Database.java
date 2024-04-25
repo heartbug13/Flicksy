@@ -14,7 +14,7 @@ import java.util.List;
  *
  */
 
-public class Database {
+public class Database implements Databases{
     private ArrayList<User> users;
     private ArrayList<Post> posts;
 
@@ -103,21 +103,6 @@ public class Database {
             return null;
         }
 
-    }
-
-    public void addFriend(User user , User friend) throws AlreadyAddedException, BlockedUserException {
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).equal(user)) {
-                users.get(i).addFriend(friend);
-            }
-        }
-    }
-    public void removeFriend(User user , User friend) {
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).equal(user)) {
-                users.get(i).removeFriend(friend);
-            }
-        }
     }
 
     public void writeDatabase() {

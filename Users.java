@@ -19,8 +19,13 @@ public interface Users {
     void addFriend(User user) throws BlockedUserException , AlreadyAddedException;
     void removeFriend(User user);
     void blockUser(User user) throws AlreadyAddedException;
+    void unblockUser(User user);
     void setPassword(String password) throws InvalidPasswordException;
     boolean verifyPassword(String password);
     ArrayList<User> searchFriendsByUsername(String search);
+    String toString();
+    boolean isFriend(User user);
+    boolean isBlocked(User user);
+
 
 }

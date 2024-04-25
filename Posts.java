@@ -13,10 +13,14 @@ import java.util.List;
     User getAuthor();
     String getContent();
     int getLikes();
+    void setLikes(int likes);
     int getDislikes();
+    void setDislikes(int dislikes);
     List<Comment> getComments();
     void addComment(Comment comment);
     void deleteComment(Comment comment);
     void like();
     void dislike();
+    boolean equal(Post post);
+    String toString();
 }

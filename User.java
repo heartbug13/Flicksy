@@ -20,7 +20,6 @@ public class User implements Users , Serializable {
     private List<User> blocked;
 
     public User(String username , String password , Profile profile) throws InvalidPasswordException, InvalidUserException {
-        //System.out.println("haldkhf");
         if (password.length() < 12) {
             throw new InvalidPasswordException("Password must be 12 characters long");
         }
@@ -87,7 +86,6 @@ public class User implements Users , Serializable {
      */
 
     public void blockUser(User user) throws AlreadyAddedException {
-        int verify = 0;
         for (User value : blocked) {
             if (user.equal(value)) {
                 throw new AlreadyAddedException("you have already blocked this user");

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Group Project - Social Media
@@ -14,6 +15,12 @@ public interface Databases {
     User getUserByUsername(String username);
     void addPost(Post post);
     List<Post> getPostsByUser(User user);
-    void addCommendToPost(Comment comment, Post post);
+    void addCommentToPost(Comment comment, Post post);
     List<Comment> getCommentsForPost(Post post);
+    ArrayList<User> searchByString(String search);
+    void writeDatabase();
+    void readDatabase();
+    ArrayList<Post> getPosts();
+
+
 }

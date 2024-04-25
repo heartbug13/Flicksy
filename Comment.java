@@ -51,10 +51,6 @@ public class Comment implements Comments , Serializable {
         this.dislikes++;
     }
 
-    public boolean equal(Comment comment) {
-        return content.equals(comment.getContent()) && author.equal(comment.getAuthor());
-    }
-
     public String toString() {
         return String.format("Author: %s\nContent: %s\nLikes: %d\nDislikes: %d" ,
                 author.getUsername() , content , likes , dislikes);

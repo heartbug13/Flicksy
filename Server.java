@@ -31,33 +31,6 @@ public class Server{
 
     }
 
-    public void run() {
-        //implements the run method
-        // Waits for and accepts connection from a user
-
-        try {
-            while (!Thread.currentThread().isInterrupted()) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("server established");
-                int freeThreadIndex = findFreeThread(); //**
-                //System.out.println("server established");
-                // calls findFreeThread method to find an available thread
-
-                if (freeThreadIndex != -1) {
-                    threads[freeThreadIndex] = new Thread(new ClientHandler(clientSocket , database));
-                    threads[freeThreadIndex].start();
-                } else {
-                    System.out.println("No free threads available"); //**
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            shutdown(); //**
-        }
-
-    }
-
     private static int findFreeThread() {
         //Iterates through threads array to find the index of the first available thread position
         for (int i = 0 ; i < threads.length; i++) {
@@ -97,7 +70,6 @@ public class Server{
                 Socket clientSocket = server.serverSocket.accept();
                 System.out.println("server established");
                 int freeThreadIndex = findFreeThread(); //**
-                //System.out.println("server established");
                 // calls findFreeThread method to find an available thread
 
                 if (freeThreadIndex != -1) {
@@ -109,22 +81,9 @@ public class Server{
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            shutdown();
         }
-
-/*
-        try (ServerSocket ss = new ServerSocket(8080)) {
-            int threadCount = 1;
-            while (true) {
-                Socket socket = ss.accept();
-                Thread t = new Thread(new ClientHandler(socket , database));
-                t.start();
-                threadCount++;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
- */
 
     }
 

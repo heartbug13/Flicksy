@@ -34,47 +34,31 @@ public class ClientHandler implements Runnable , Serializable{
         try {
             System.out.println("connection established");
 
-            //BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //**
-            //PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true); //**
-
             outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             inputStream = new ObjectInputStream(clientSocket.getInputStream());
 
             String inputLine = "";
-            //inputLine = reader.readLine();
             while ((inputLine = (String) inputStream.readObject()) != null) {
-                //System.out.println("input line: " + inputLine);
 
                 if (inputLine.equals("sign in")) {
-                    //System.out.println("you should be going here");
-                    //String username = reader.readLine();
-                    //String password = reader.readLine();
 
                     String username = (String) inputStream.readObject();
                     String password = (String) inputStream.readObject();
-                    //System.out.println("Username " + username);
-                    //System.out.println("Password " + password);
 
                     User checkUser = database.getUserByUsername(username);
                     if (checkUser == null) {
-                        //System.out.println("no user");
-                        //writer.println("false");
-                        //writer.flush();
 
                         outputStream.writeObject("false");
                         outputStream.flush();
 
                     } else if (checkUser.verifyPassword(password)){
-                        //writer.println("true");
-                        //writer.flush();
+
                         outputStream.writeObject("true");
-                        //System.out.println(checkUser);
                         outputStream.writeObject(checkUser);
                         outputStream.writeObject(database.getPosts().size());
                         outputStream.flush();
 
                         for (int i = 0; i < database.getPosts().size(); i++) {
-                            //System.out.println(database.getPosts().get(i));
                             outputStream.writeObject(database.getPosts().get(i));
                             outputStream.flush();
                         }
@@ -89,9 +73,6 @@ public class ClientHandler implements Runnable , Serializable{
                         }
 
                     } else {
-                        //System.out.println("false password");
-                        //writer.println("false");
-                        //writer.flush();
                         outputStream.writeObject("false");
                         outputStream.flush();
                     }
@@ -103,10 +84,8 @@ public class ClientHandler implements Runnable , Serializable{
                     Profile newUsersProfile = new Profile(name , bio);
                     database.addUser(new User(username , password , newUsersProfile));
                     database.writeDatabase();
-                    //System.out.println(database.getUserByUsername(username));
 
                 } else if (inputLine.equals("like comment")) {
-                    //System.out.println("updating");
                     int postIndex = (Integer) inputStream.readObject();
                     int commentIndex = (Integer) inputStream.readObject();
 
@@ -163,14 +142,12 @@ public class ClientHandler implements Runnable , Serializable{
                 } else if (inputLine.equals("friend")) {
                     String username = (String) inputStream.readObject();
                     User user = (User) inputStream.readObject();
-                    //System.out.println("username: " + username);
 
                     User friend = database.getUserByUsername(username);
-                    //System.out.println("add friend " + friend);
+
                     if (friend != user) {
                         try {
                             database.getUserByUsername(user.getUsername()).addFriend(friend);
-                            //System.out.println(user.getFriends());
                             outputStream.writeObject("adding a friend");
                             outputStream.writeObject(friend);
                             outputStream.flush();
@@ -187,13 +164,10 @@ public class ClientHandler implements Runnable , Serializable{
                 } else if (inputLine.equals("unfriend")) {
                     String username = (String) inputStream.readObject();
                     User user = (User) inputStream.readObject();
-                    //System.out.println("username: " + username);
 
                     User friend = database.getUserByUsername(username);
-                    //System.out.println("add friend " + friend);
                     if (friend != user) {
                         database.getUserByUsername(user.getUsername()).removeFriend(friend);
-                        //System.out.println(user.getFriends());
                         outputStream.writeObject("adding a friend");
                         outputStream.writeObject(friend);
                         outputStream.flush();
@@ -248,7 +222,6 @@ public class ClientHandler implements Runnable , Serializable{
                     database.writeDatabase();
 
                 } else if (inputLine.equals("make profile")) {
-                    //System.out.println("hello");
                     String bio = (String) inputStream.readObject();
                     String name = (String) inputStream.readObject();
                     String username = (String) inputStream.readObject();

@@ -9,36 +9,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GUI implements ActionListener {
-    public static JButton signIn;
-    public static JButton signUp;
-    public static JButton addComment;
-    public static JPasswordField getPassword;
-    public static JTextField getUserName;
-    public static JTextArea addCommentContent;
-    public static JTextArea bio;
-    public static JTextField name;
-    public static JTextArea addPost;
-    public static JTextField search;
-    static JLabel welcomeMessage;
-    public static JButton makeProfile;
-    public static JButton addPostButton;
-    public static JButton searchButton;
-    public static JButton seeFullProfile;
-    public static JButton friendButton;
-    public static JButton block;
-    public static JMenuBar menuBar;
-    public static JMenuItem newsFeedButton = new JMenuItem("News Feed");
-    public static JMenuItem usersProfileButton = new JMenuItem("Profile");
+    private static JButton signIn;
+    private static JButton signUp;
+    private static JButton addComment;
+    private static JPasswordField getPassword;
+    private static JTextField getUserName;
+    private static JTextArea addCommentContent;
+    private static JTextArea bio;
+    private static JTextField name;
+    private static JTextArea addPost;
+    private static JTextField search;
+    private static JLabel welcomeMessage;
+    private static JButton makeProfile;
+    private static JButton addPostButton;
+    private static JButton searchButton;
+    private static JButton seeFullProfile;
+    private static JButton friendButton;
+    private static JButton block;
+    private static JMenuBar menuBar;
+    private static JMenuItem newsFeedButton = new JMenuItem("News Feed");
+    private static JMenuItem usersProfileButton = new JMenuItem("Profile");
     private static Client client;
-    static JFrame userProfile = new JFrame();
-    static JFrame newsFeed = new JFrame();
-    static JFrame commentBoard = new JFrame();
-    static JFrame sneakPeakProfile = new JFrame();
-    static JFrame signInFrame = new JFrame();
-    static JFrame createProfile = new JFrame();
+    private static JFrame userProfile = new JFrame();
+    private static JFrame newsFeed = new JFrame();
+    private static JFrame commentBoard = new JFrame();
+    private static JFrame sneakPeakProfile = new JFrame();
+    private static JFrame signInFrame = new JFrame();
+    private static JFrame createProfile = new JFrame();
     private static User signedInUser;
-    static List<Post> posts = new ArrayList<>();
-    static List<Post> postByUser = new ArrayList<>();
+    private static List<Post> posts = new ArrayList<>();
+    private static List<Post> postByUser = new ArrayList<>();
 
     public static void main(String[] args) {
         try  {
@@ -74,7 +74,7 @@ public class GUI implements ActionListener {
         }
     }
 
-    public static void initialPage() {
+    private static void initialPage() {
         signInFrame = new JFrame();
         signInFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ImageIcon icon = new ImageIcon("Flicksy.PNG");
@@ -124,7 +124,7 @@ public class GUI implements ActionListener {
         signInFrame.setVisible(true);
     }
 
-    public static void createProfilePage() {
+    private static void createProfilePage() {
         createProfile = new JFrame();
         createProfile.setSize(370, 300);
         createProfile.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -169,7 +169,7 @@ public class GUI implements ActionListener {
 
     }
 
-    public static void createUserProfile(User user , List<Post> usersPost) {
+    private static void createUserProfile(User user , List<Post> usersPost) {
         userProfile = new JFrame();
         userProfile.setSize(675 , 663);
         userProfile.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -322,7 +322,7 @@ public class GUI implements ActionListener {
 
     }
 
-    public static void sneakPeakOfUser(User user , List<Post> usersPost) {
+    private static void sneakPeakOfUser(User user , List<Post> usersPost) {
         sneakPeakProfile.setSize(493, 620);
         sneakPeakProfile.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -440,7 +440,7 @@ public class GUI implements ActionListener {
 
     }
 
-    public static void  createNewsFeed() {
+    private static void  createNewsFeed() {
         newsFeed.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ImageIcon icon = new ImageIcon("Flicksy.PNG");
         newsFeed.setIconImage(icon.getImage());
@@ -663,7 +663,7 @@ public class GUI implements ActionListener {
         return postPanel;
     }
 
-    public static void createComment(Post post , int postIndex) {
+    private static void createComment(Post post , int postIndex) {
         commentBoard.setSize(346 , 300);
         commentBoard.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ImageIcon icon = new ImageIcon("Flicksy.PNG");

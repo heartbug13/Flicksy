@@ -11,4 +11,5 @@
 public interface Servers {
     int findFreeThread();
     void shutdown();
+    void main(String[] args);
 }
