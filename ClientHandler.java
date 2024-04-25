@@ -29,19 +29,21 @@ public class ClientHandler implements Runnable , Serializable{
     @Override
     public void run() {
 
+        ObjectOutputStream outputStream = null;
+        ObjectInputStream inputStream = null;
         try {
             System.out.println("connection established");
 
             //BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //**
             //PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true); //**
 
-            ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-            ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream());
+            outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+            inputStream = new ObjectInputStream(clientSocket.getInputStream());
 
             String inputLine = "";
             //inputLine = reader.readLine();
             while ((inputLine = (String) inputStream.readObject()) != null) {
-                System.out.println("input line: " + inputLine);
+                //System.out.println("input line: " + inputLine);
 
                 if (inputLine.equals("sign in")) {
                     //System.out.println("you should be going here");
@@ -87,7 +89,7 @@ public class ClientHandler implements Runnable , Serializable{
                         }
 
                     } else {
-                        System.out.println("false password");
+                        //System.out.println("false password");
                         //writer.println("false");
                         //writer.flush();
                         outputStream.writeObject("false");
@@ -104,7 +106,7 @@ public class ClientHandler implements Runnable , Serializable{
                     //System.out.println(database.getUserByUsername(username));
 
                 } else if (inputLine.equals("like comment")) {
-                    System.out.println("updating");
+                    //System.out.println("updating");
                     int postIndex = (Integer) inputStream.readObject();
                     int commentIndex = (Integer) inputStream.readObject();
 
@@ -246,7 +248,7 @@ public class ClientHandler implements Runnable , Serializable{
                     database.writeDatabase();
 
                 } else if (inputLine.equals("make profile")) {
-                    System.out.println("hello");
+                    //System.out.println("hello");
                     String bio = (String) inputStream.readObject();
                     String name = (String) inputStream.readObject();
                     String username = (String) inputStream.readObject();
@@ -264,23 +266,16 @@ public class ClientHandler implements Runnable , Serializable{
                         outputStream.flush();
                     }
 
-                } else if (inputLine.equals("close server")) {
-                    outputStream.close();
-                    inputStream.close();
-                    clientSocket.close();
-                    return;
                 }
             }
 
-
-            //System.out.println(inputLine);
-            //System.out.println(inputLine);
+            outputStream.close();
+            inputStream.close();
 
         } catch (Exception e) {
             e.printStackTrace();
 
         } finally { //**
-            //clientSocket.close();
             database.writeDatabase();
         }
     }

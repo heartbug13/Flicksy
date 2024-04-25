@@ -150,15 +150,15 @@ public class Database {
             pw = new PrintWriter(new FileWriter("friendFiles"));
             new FileWriter("friendFiles", false).close();
             for (int i = 0; i < users.size(); i++) {
-                System.out.println(users.get(i));
+                //System.out.println(users.get(i));
                 int verify = 0;
                 for (int j = 0; j < users.get(i).getFriends().size(); j++) {
                     if (j == 0) {
                         verify++;
                         pw.println("Username: " + users.get(i).getUsername());
-                        System.out.println("User " + users.get(i).getUsername());
+                        //System.out.println("User " + users.get(i).getUsername());
                     }
-                    System.out.println("Friends " + users.get(i).getFriends());
+                    //System.out.println("Friends " + users.get(i).getFriends());
                     pw.println("FriendUsername: " + users.get(i).getFriends().get(j).getUsername());
                 }
 
@@ -175,7 +175,7 @@ public class Database {
                 if (!users.get(i).getFriends().isEmpty()) {
                     pw.println();
                 }
-                System.out.println();
+                //System.out.println();
             }
 
             pw.close();
@@ -291,8 +291,8 @@ public class Database {
 
             bfr = new BufferedReader(new FileReader("friendFiles"));
 
-            System.out.println("reading friend file");
-            System.out.println();
+            //System.out.println("reading friend file");
+            //System.out.println();
             User main = null;
             int index = 0;
             while ((line = bfr.readLine()) != null) {
