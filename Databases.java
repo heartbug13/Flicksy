@@ -11,7 +11,7 @@ import java.util.List;
  *
  */
 public interface Databases {
-    void addUser(User user);
+    void addUser(User user) throws AlreadyAddedException;
     User getUserByUsername(String username);
     void addPost(Post post);
     List<Post> getPostsByUser(User user);

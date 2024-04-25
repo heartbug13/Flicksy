@@ -14,7 +14,7 @@ import java.net.Socket;
 
 public interface Clients {
     Socket getSocket();
-    User makeUser(String username , String password);
+    User makeUser(String username, String password, Profile profile) throws InvalidPasswordException, InvalidUserException;
     Post makePost(User author , String content);
     Comment makeComment(User author , String content);
     void sendMessageToServer(Object message) throws IOException;

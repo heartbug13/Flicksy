@@ -31,6 +31,13 @@ public class Server{
 
     }
 
+    /**
+     * methods searches through the array of threads
+     * returns the index of an available thread
+     * thread is considered if the index of the array is null and the thread is not alive
+     * if there is no thread available returns -1
+     */
+
     private static int findFreeThread() {
         //Iterates through threads array to find the index of the first available thread position
         for (int i = 0 ; i < threads.length; i++) {
@@ -42,14 +49,21 @@ public class Server{
 
     }
 
+    /**
+     * shuts down the server and iterates through the array of threads
+     * interrupts any active thread a the database is written to store the information
+     * the server socket is closed
+     */
+
     private static void shutdown() {
         // Interrupts active threads to stop their execution an closes the server socket
         for (Thread thread : threads) {
             if (thread != null) {
                 thread.interrupt(); //**
             }
-            database.writeDatabase();
         }
+
+        database.writeDatabase();
 
         try {
             serverSocket.close();
@@ -57,6 +71,17 @@ public class Server{
             e.printStackTrace();
         }
     }
+
+    /**
+     * main method of the server
+     * creates a new database and reads any information from the files
+     * containing information on users and posts
+     * creates a new server has a while loop that continues until the thread is interrupted
+     * the loop accepts a client socket, checks if there is an available thread
+     * if there is an available thread, adds the thread to the threads array and creates a new client handler
+     * starts the new thread, if there is no thread available prints out "No free threads available" to the
+     * terminal
+     */
 
     public static void main(String[] args) {
         // creates instance of server class and starts it in a new thread.

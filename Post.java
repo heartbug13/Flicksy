@@ -28,6 +28,7 @@ public class Post implements Posts , Serializable {
 
     /**
      * getter methods for author, content, comments, likes, and dislikes
+     * setter methods for likes and dislikes
      */
 
     public User getAuthor() {
@@ -82,6 +83,15 @@ public class Post implements Posts , Serializable {
     public boolean equal(Post post) {
         return author.equals(post.getAuthor()) && content.equals(post.getContent());
     }
+
+    /**
+     * returns the string version of a post
+     * ex:
+     * Author: quirkyJess
+     * Content: I think I was bred in a lab to help people. :)
+     * Likes: 0
+     * Dislikes: 0
+     */
 
     public String toString() {
         return String.format("Author: %s\nContent: %s\nLikes: %d\nDislikes: %d",

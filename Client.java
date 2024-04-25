@@ -35,25 +35,50 @@ public class Client implements Clients {
         inputStream = new ObjectInputStream(socket.getInputStream());
     }
 
+    /**
+     * getter method for the socket
+     */
+
     public Socket getSocket() {
         return socket;
     }
+
+    /**
+     * creates a user with the information parsed in
+     */
 
     public User makeUser(String username, String password, Profile profile) throws InvalidPasswordException, InvalidUserException {
         return new User(username, password, profile);
     }
 
+    /**
+     * creates a profile with the information parsed in
+     */
+
     public Profile makeProfile(String name, String bio) {
         return new Profile(name, bio);
     }
+
+    /**
+     * creates a post with the information parsed in
+     */
 
     public Post makePost(User author, String content) {
         return new Post(author, content);
     }
 
+    /**
+     * creates a comment with the information parsed in
+     */
+
     public Comment makeComment(User author, String content) {
         return new Comment(author, content);
     }
+
+    /**
+     * sends a message to the server
+     * if there is an error message prints out an error message to the terminal
+     */
 
     public void sendMessageToServer(Object message) throws IOException {
         try {
@@ -66,6 +91,11 @@ public class Client implements Clients {
 
     }
 
+    /**
+     * receives a message to the server
+     * if there is an error message prints out an error message to the terminal
+     */
+
     public Object receiveMessageFromServer() throws IOException, ClassNotFoundException {
         try {
             return inputStream.readObject();
@@ -75,6 +105,11 @@ public class Client implements Clients {
         return null;
 
     }
+
+    /**
+     * closes the socket, output stream, and the input stream
+     * if there is an io exception thrown prints out a error message to the terminal
+     */
 
     public void close() throws IOException {
         try {
@@ -95,21 +130,37 @@ public class Client implements Clients {
 
     }
 
+    /**
+     * returns null
+     */
+
 
     @Override
     public User makeUser() {
         return null;
     }
 
+    /**
+     * returns null
+     */
+
     @Override
     public Profile makeProfile() {
         return null;
     }
 
+    /**
+     * returns null
+     */
+
     @Override
     public Post makePost() {
         return null;
     }
+
+    /**
+     * returns null
+     */
 
     @Override
     public Comment makeComment() {

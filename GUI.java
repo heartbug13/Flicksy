@@ -40,6 +40,14 @@ public class GUI implements ActionListener {
     private static List<Post> posts = new ArrayList<>();
     private static List<Post> postByUser = new ArrayList<>();
 
+    /**
+     * main method of the class
+     * creates a new socket and client that connects to the socket
+     * creates a menu bar that will be added to most frames
+     * menu bar contains a button to go to the newsfeed and to the signed in users profile
+     * calls the method initialPage() to create the sign in/sign up page
+     */
+
     public static void main(String[] args) {
         try  {
             Socket socket = new Socket("localhost" , 8080);
@@ -74,11 +82,19 @@ public class GUI implements ActionListener {
         }
     }
 
+    /**
+     * creates the initial page that the user sees once they start Flicksy
+     * includes a welcome message that changes depending on either or not the user is signing in or signing up
+     * sign in and sign up panel asks for the users username and password, the password is displayed as dots to protect the users privacy
+     * has a button to submit the information to the server to either verify the users information or create another user
+     * has a button to switch between the option to signin or signup
+     * if the user is signed in they are taken to their newsfeed, if the user is signing up the user is taken to a frame to ask for their name and biography
+     */
+
     private static void initialPage() {
         signInFrame = new JFrame();
         signInFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        ImageIcon icon = new ImageIcon("Flicksy.PNG");
-        signInFrame.setIconImage(icon.getImage());
+
         signInFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         signInFrame.setSize(470, 470);
         signInFrame.setLayout(new BorderLayout());
@@ -124,6 +140,13 @@ public class GUI implements ActionListener {
         signInFrame.setVisible(true);
     }
 
+    /**
+     * creates a frame to ask for the users name and bio
+     * uses a jtextfield to ask for their name, but a jtextarea to ask for their because their bio will likely be longer
+     * has a button to summit the information to the server
+     * once the user created their profile they are taken to their newsfeed
+     */
+
     private static void createProfilePage() {
         createProfile = new JFrame();
         createProfile.setSize(370, 300);
@@ -168,6 +191,15 @@ public class GUI implements ActionListener {
         createProfile.setResizable(false);
 
     }
+
+    /**
+     * creates a profile for the user
+     * on the left side of the frame holds the user's information including their actual name and their username
+     * left side of the panel also has two buttons, one button to friend/unfriend the user and one button two block/unblock the user
+     * it also shows the number of friends and posts the user has and their bio
+     * on the right side of the frame displays all the users post, if there is no post it
+     * displays the message "No posts yet by username"
+     */
 
     private static void createUserProfile(User user , List<Post> usersPost) {
         userProfile = new JFrame();
@@ -322,6 +354,13 @@ public class GUI implements ActionListener {
 
     }
 
+    /**
+     * creates the sneak peak frame of a user
+     * is shown when a user searchers for another user
+     * at the top of the page, it shows the users name, username, number of posts and friends, and their bio
+     * at the bottom of the page it shows the first of the users post and a button to take them to their full profile
+     */
+
     private static void sneakPeakOfUser(User user , List<Post> usersPost) {
         sneakPeakProfile.setSize(493, 620);
         sneakPeakProfile.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -439,6 +478,16 @@ public class GUI implements ActionListener {
         sneakPeakProfile.setResizable(false);
 
     }
+
+    /**
+     * creates the news feed of a user
+     * displays all the posts created by users, hides any posts by blocked users
+     * at the left side of the news feed page it shows the signed in users information
+     * this included the users name, username, number of posts and friends, and their bio
+     * the right side are all the posts
+     * each post has the option to display the comments of the posts, like or dislike the post and friend/unfriend the author of the post
+     * each post also shows the username of the post's author
+     */
 
     private static void  createNewsFeed() {
         newsFeed.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -594,6 +643,14 @@ public class GUI implements ActionListener {
         newsFeed.setResizable(false);
     }
 
+    /**
+     * creates a post panel for the post
+     * takes in the post that is being displayed, the index of the post in the posts array, and which page it will be displayed in
+     * the index of the post is used to direct the server on which post to modify
+     * the post includes the username of the post's author with the ability to
+     * display the comments of the post, like/dislike the post, and to friend/unfriend the post
+     */
+
     private static JPanel createPostPanel(Post post , String num , String page) {
         JPanel postPanel = new JPanel();
 
@@ -662,6 +719,12 @@ public class GUI implements ActionListener {
 
         return postPanel;
     }
+
+    /**
+     * creates a comment board
+     * displays all the posts comment an allows the user to like or dislike a comment
+     * also allows the user to add a comment to the post
+     */
 
     private static void createComment(Post post , int postIndex) {
         commentBoard.setSize(346 , 300);
@@ -743,17 +806,33 @@ public class GUI implements ActionListener {
 
     }
 
+    /**
+     * method for the user to interact with the GUI by pressing buttons
+     * checks the source of the action and modify the GUI accordingly
+     */
+
     public void actionPerformed(ActionEvent e) {
         try {
 
             JButton checkButton = new JButton();
 
             if (!(e.getSource() == newsFeedButton) || !(e.getSource() == usersProfileButton)) {
+                //checks if the source is not from the newsfeed or user profile button
+                //if source is not from the menu bar, casts the source as a button
                 checkButton = (JButton) e.getSource();
             }
 
 
             if (e.getSource() == signIn && signIn.getActionCommand().equals("Sign In")) {
+                //checks if the source is from the sign in button and the action command equals "Sign In"
+                //if so, gets the username and password entered in their respective text fields
+                //turns the password into a string and checks if either of the text fields are empty
+                //if there is an empty field the program displays an error message asking the user to fill out all the fields
+                //if both the text fields are filed, sends the information to the server to add the user to the database
+                //assigns the signed in user to the user that signed in
+                //also checks if the password is correct, if the password is incorrect displays an error message
+                //takes the user to the newsfeed
+                //gets all the posts made previously
                 String username = getUserName.getText();
                 char[] password = getPassword.getPassword();
                 String pass = "";
@@ -799,6 +878,8 @@ public class GUI implements ActionListener {
                     }
                 }
             } else if (e.getSource() == signUp && signUp.getActionCommand().equals("New to Flicksy? Join now")) {
+                //checks if the source is from the sign up button and if the action command is asking to join Flicksy
+                //if so it changes the text to fit the sign up display
                 signIn.setActionCommand("Sign Up");
                 signIn.setText("Sign Up");
                 signUp.setActionCommand("Already on Flicksy? Sign in");
@@ -806,6 +887,11 @@ public class GUI implements ActionListener {
                 welcomeMessage.setText("Make the Most of Flicksy");
 
             } else if (e.getSource() == signIn && signIn.getActionCommand().equals("Sign Up")) {
+                //checks if the source is sign in and the action command is sign up
+                //turns the password into a string and gets the username
+                //checks if any of the fields are empty, if so displays a error message
+                //if all the fields are filled, the server checks if the user is already added/created
+                //if the user is already added, shows an error message, if not takes the user to create their profile
                 String username = getUserName.getText();
                 char[] password = getPassword.getPassword();
                 String pass = "";
@@ -822,21 +908,33 @@ public class GUI implements ActionListener {
                     client.sendMessageToServer(username);
                     client.sendMessageToServer(pass);
 
-                    signInFrame.setVisible(false);
-                    String filler = "";
-                    Profile profile = new Profile(filler , filler);
-                    signedInUser = new User(username , pass , profile);
-                    createProfilePage();
+                    String response = (String) client.receiveMessageFromServer();
+
+                    if (response.equals("creating user")) {
+
+                        signInFrame.setVisible(false);
+                        String filler = "";
+                        Profile profile = new Profile(filler, filler);
+                        signedInUser = new User(username, pass, profile);
+                        createProfilePage();
+                    } else {
+                        JOptionPane.showMessageDialog(null, response,
+                                "Error", JOptionPane.INFORMATION_MESSAGE);
+                    }
 
                 }
 
             } else if (e.getSource() == signUp && signUp.getActionCommand().equals("Already on Flicksy? Sign in")) {
+                //checks if the source is signup and if the action command is asking to sign in
+                //changes the frame according to the sign in page
                 signIn.setActionCommand("Sign In");
                 signIn.setText("Sign In");
                 signUp.setActionCommand("New to Flicksy? Join now");
                 signUp.setText("New to Flicksy? Join now");
                 welcomeMessage.setText("Welcome to your Flicksy Community");
             } else if (e.getSource() == addComment && !addCommentContent.getText().equals("Add A Comment\n")) {
+                //checks if the source is from add comment and if the addCommentContent text doesn't equal the base text
+                //if everything is okay, adds a comment to the post and updates the comment board
                 Comment comment = new Comment(signedInUser , addCommentContent.getText());
                 int postIndex = Integer.parseInt(checkButton.getActionCommand());
 
@@ -848,6 +946,8 @@ public class GUI implements ActionListener {
                 commentBoard.setVisible(false);
                 createComment(posts.get(postIndex) , postIndex);
             } else if (e.getSource() == addPostButton && !addPost.getText().equals("Start a Post...")) {
+                //checks if the source is fromm the add post button and if the add post content doesn't equal the base text
+                //if everything is okay, adds a post and updates the newsfeed with the new post
                 Post post = new Post(signedInUser , addPost.getText());
 
                 client.sendMessageToServer("add post");
@@ -858,6 +958,10 @@ public class GUI implements ActionListener {
                 newsFeed.setVisible(false);
                 createNewsFeed();
             } else if (e.getSource() == searchButton && !search.getText().equals("Search...")) {
+                //checks if the source is from search button and the search text doesn't equal the base text
+                //if everything is okay, sends the search string to the server to find all the users with username that contains the search message
+                //if there is no result/users found displays an error message
+                //if there is a result displays the option pane of all the users found
 
                 client.sendMessageToServer("search");
                 client.sendMessageToServer(search.getText());
@@ -904,6 +1008,11 @@ public class GUI implements ActionListener {
                 }
 
             } else if (e.getSource() == seeFullProfile) {
+                //checks to see if the source is the from the see full profile button
+                //gets the username of the profile the user wishes to see
+                //finds the user based on the username via server
+                //finds all the post based on the username
+                //takes the user to full profile of the user
                 String username = seeFullProfile.getActionCommand();
 
                 client.sendMessageToServer("find user based on username");
@@ -929,6 +1038,9 @@ public class GUI implements ActionListener {
 
             } else if (e.getSource() == friendButton && friendButton.getText().equals("Friend")) {
                 String username = friendButton.getActionCommand();
+                //checks if the source is from the friend button in the user profile and the text equals "Friend"
+                //if so communicates with the server to find the friend and adds the friend
+                //if the user is already added, blocked by the user, or if the user equals the signed user displays a error message
 
                 client.sendMessageToServer("friend");
                 client.sendMessageToServer(username);
@@ -965,6 +1077,9 @@ public class GUI implements ActionListener {
 
             } else if (e.getSource() == friendButton && friendButton.getText().equals("Unfriend")) {
                 String username = friendButton.getActionCommand();
+                //checks if the source is from the friend button in the user profile and the text equals "Unfriend"
+                //if so communicates with the server to find the friend and removes the friend
+                //displays an error message if the user and friend are equal
 
                 client.sendMessageToServer("unfriend");
                 client.sendMessageToServer(username);
@@ -985,6 +1100,9 @@ public class GUI implements ActionListener {
                 }
             } else if (e.getSource() == block && block.getText().equals("Block")) {
                 String username = block.getActionCommand();
+                //checks if the source is from the block button in the user profile and the text equals "Block"
+                //if so communicates with the server to find the user and blocks the user
+                //displays an error message if there is an exception thrown when blocking the user, ie the user is already blocked
 
                 client.sendMessageToServer("block");
                 client.sendMessageToServer(username);
@@ -1002,6 +1120,8 @@ public class GUI implements ActionListener {
                 }
 
             } else if (e.getSource() == block && block.getText().equals("Unblock")) {
+                //checks if the source is from the block button in the user profile and the text equals "Unblock"
+                //if so communicates with the server to find the user and unblocks the user
                 String username = block.getActionCommand();
                 client.sendMessageToServer("unblock");
                 client.sendMessageToServer(username);
@@ -1011,6 +1131,8 @@ public class GUI implements ActionListener {
                 signedInUser.unblockUser(unblocked);
                 block.setText("Block");
             } else if (e.getSource() == newsFeedButton) {
+                //checks if the source is from the news feed button
+                //if so creates the news feed and closes any open frames
                 userProfile.setVisible(false);
                 newsFeed.setVisible(false);
                 commentBoard.setVisible(false);
@@ -1018,6 +1140,8 @@ public class GUI implements ActionListener {
                 signInFrame.setVisible(false);
                 createNewsFeed();
             } else if (e.getSource() == usersProfileButton) {
+                //checks if the source is from the user profile button
+                //if so creates the user's profile and closes any open frames
                 userProfile.setVisible(false);
                 newsFeed.setVisible(false);
                 commentBoard.setVisible(false);
@@ -1026,6 +1150,10 @@ public class GUI implements ActionListener {
 
                 createUserProfile(signedInUser , postByUser);
             } else if (e.getSource() == makeProfile) {
+                //checks if the source is from make profile
+                //gets the name and bio of the user and sets the signed user to these text fields
+                //communicates with the server to set the name and bio
+                //takes the user to the newsfeed
                 client.sendMessageToServer("make profile");
                 client.sendMessageToServer(bio.getText());
                 client.sendMessageToServer(name.getText());
@@ -1034,16 +1162,27 @@ public class GUI implements ActionListener {
                 signedInUser.getProfile().setBio(bio.getText());
                 signedInUser.getProfile().setName(name.getText());
                 createProfile.setVisible(false);
+
+                int size = (Integer) client.receiveMessageFromServer();
+                for (int i = 0; i < size; i++) {
+                    Post post = (Post) client.receiveMessageFromServer();
+                    posts.add(post);
+                }
+
                 createNewsFeed();
             }
             int index = checkButton.getActionCommand().indexOf("-");
 
             if (checkButton.getActionCommand().contains("commentNewsFeed") ||
                     checkButton.getActionCommand().contains("commentSneakPeakPage")) {
+                //checks if the source is from the news feed or from sneak peak page
+                //if so creates the comment board with the post and the index of the post
                 int postIndex = Integer.parseInt(checkButton.getActionCommand().substring(index + 1));
                 createComment(posts.get(postIndex) , postIndex);
             } else if (checkButton.getActionCommand().contains("likeNewsFeed") ||
                     checkButton.getActionCommand().contains("likeSneakPeakPage")) {
+                //checks if the source is from the news feed or from the sneak peak page
+                //if so communicates with the server like the post
                 int postIndex = Integer.parseInt(checkButton.getActionCommand().substring(index + 1));
 
                 posts.get(postIndex).like();
@@ -1053,6 +1192,8 @@ public class GUI implements ActionListener {
                 client.sendMessageToServer(postIndex);
             } else if (checkButton.getActionCommand().contains("disLikeNewsFeed") ||
                     checkButton.getActionCommand().contains("disLikeSneakPeakPage")) {
+                //checks if the source is from the news feed or from the sneak peak page
+                //if so communicates with the server dislike the post
                 int postIndex = Integer.parseInt(checkButton.getActionCommand().substring(index + 1));
 
                 posts.get(postIndex).dislike();
@@ -1061,6 +1202,8 @@ public class GUI implements ActionListener {
                 client.sendMessageToServer("dislike post");
                 client.sendMessageToServer(postIndex);
             } else if (checkButton.getActionCommand().contains("likeCommentBoard")) {
+                //checks if the source is from the comment board
+                //if so communicates with the server like the comment
                 int postIndex = Integer.parseInt(checkButton.getActionCommand().substring(0 , index));
                 String updated = checkButton.getActionCommand().substring(index + 1);
 
@@ -1073,6 +1216,8 @@ public class GUI implements ActionListener {
                 client.sendMessageToServer(postIndex);
                 client.sendMessageToServer(commentIndex);
             } else if (checkButton.getActionCommand().contains("disLikeCommentBoard")) {
+                //checks if the source is from the comment board
+                //if so communicates with the server dislikes the comment
                 int postIndex = Integer.parseInt(checkButton.getActionCommand().substring(0 , index));
                 String updated = checkButton.getActionCommand().substring(index + 1);
 
@@ -1085,6 +1230,9 @@ public class GUI implements ActionListener {
                 client.sendMessageToServer(postIndex);
                 client.sendMessageToServer(commentIndex);
             } else if (checkButton.getActionCommand().contains("friendNewsFeed")) {
+                //checks if the source is coming from the news feed page
+                //adds the author of the post as a friend
+                //if there is an exception thrown when adding the user as a friend displays a error message
                 int postIndex = Integer.parseInt(checkButton.getActionCommand().substring(0 , index));
                 String updated = checkButton.getActionCommand().substring(index + 1);
 
@@ -1109,7 +1257,9 @@ public class GUI implements ActionListener {
                 }
 
             } else if (checkButton.getActionCommand().contains("unFriendNewsFeed")) {
-                int postIndex = Integer.parseInt(checkButton.getActionCommand().substring(0 , index));
+                //checks if the source is coming from the news feed page
+                //removes the author of the post as a friend
+                //if there is an exception thrown when adding the user as a friend displays a error message
                 String updated = checkButton.getActionCommand().substring(index + 1);
 
                 index = updated.indexOf("-");

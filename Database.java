@@ -26,21 +26,26 @@ public class Database implements Databases{
     /**
      * adds a user to the list of users
      * first checks if the user is already added to the database
+     * if there is a user already added throws a new AlreadyAddedException
      */
 
-    public synchronized void addUser(User user) {
-        int verify = 0;
+    public synchronized void addUser(User user) throws AlreadyAddedException {
         //checks if there is user is already a friend
         for (User value : users) {
             if (value.getUsername().equals(user.getUsername())) {
-                verify++;
+                throw new AlreadyAddedException("this username is already associated with another user");
             }
         }
-        if (verify == 0) {
-            users.add(user);
-        }
+        users.add(user);
 
     }
+
+    /**
+     * returns the user that matches the username
+     * iterates through the entire array of users and checks if the users are equal
+     * returns the user that are equal
+     */
+
     public User getUserByUsername(String username) {
         User foundUser = null;
         for (User user : users) {
@@ -50,6 +55,11 @@ public class Database implements Databases{
         }
         return foundUser;
     }
+
+    /**
+     * adds the post the list of posts
+     * if the post is already added the post is not added
+     */
 
     public synchronized void addPost(Post post) {
         int verify = 0;
@@ -63,6 +73,12 @@ public class Database implements Databases{
         }
     }
 
+    /**
+     * gets all the posts of the user
+     * adds all the post to an array if the post's author equals the user parsed into the method
+     * returns the array of posts
+     */
+
     public List<Post> getPostsByUser(User user) {
         List<Post> post = new ArrayList<>();
         for (Post value : posts) {
@@ -72,6 +88,12 @@ public class Database implements Databases{
         }
         return post;
     }
+
+    /**
+     * adds a comment to the post
+     * iterates through the entire array of posts, if the post equals the post parsed in, adds the comment
+     */
+
     public synchronized void addCommentToPost(Comment comment, Post post) {
         for (Post value : posts) {
             if (value.equal(post)) {
@@ -79,6 +101,12 @@ public class Database implements Databases{
             }
         }
     }
+
+    /**
+     * iterates through the entire posts array
+     * find the post that equals the post and returns the array of comments
+     */
+
     public List<Comment> getCommentsForPost(Post post) {
         List<Comment> comments = new ArrayList<>();
         for (Post value : posts) {
@@ -88,6 +116,12 @@ public class Database implements Databases{
         }
         return comments;
     }
+
+    /**
+     * iterates through the entire array of the user
+     * checks if the user's username contains the search string and if so
+     * adds them to an array of users that is then returned
+     */
 
     public ArrayList<User> searchByString(String search) {
         ArrayList<User> temp = new ArrayList<>();
@@ -105,7 +139,11 @@ public class Database implements Databases{
 
     }
 
-    public void writeDatabase() {
+    /**
+     * writes the information of the database into three files "userFiles", "postFiles", "friendFiles"
+     */
+
+    public synchronized void writeDatabase() {
         try {
             PrintWriter pw = new PrintWriter(new FileWriter("userFiles"));
             new FileWriter("userFiles", false).close();
@@ -169,7 +207,12 @@ public class Database implements Databases{
             e.printStackTrace();
         }
     }
-    public void readDatabase() {
+
+    /**
+     * reads the information of the database into three files "userFiles", "postFiles", "friendFiles"
+     */
+
+    public synchronized void readDatabase() {
         try {
             BufferedReader bfr = new BufferedReader(new FileReader("userFiles"));
             String line = "";
@@ -320,6 +363,10 @@ public class Database implements Databases{
             e.printStackTrace();
         }
     }
+
+    /**
+     * returns all the posts from the database
+     */
 
     public ArrayList<Post> getPosts() {
         return posts;

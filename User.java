@@ -152,10 +152,25 @@ public class User implements Users , Serializable {
         return foundUsers;
     }
 
+    /**
+     * returns the string version of a user
+     * ex:
+     * Name: Winston Bishop
+     * Bio: Hey, I'm Winston, your friendly neighborhood prankster and former basketball pro turned cat enthusiast...
+     * Username: prankSinatra
+     * Password: Prankster7777!
+     */
+
     public String toString() {
         return String.format("Name: %s\nBio: %s\nUsername: %s\nPassword: %s" , profile.getName() ,
                 profile.getBio() , username , password);
     }
+
+    /**
+     * checks if the user is a friend of this.user
+     * iterates through the list of a friend this.user, if there is a match then
+     * the method returns true, else returns false
+     */
 
     public boolean isFriend(User user) {
         for (int i = 0; i < friends.size(); i++) {
@@ -165,6 +180,12 @@ public class User implements Users , Serializable {
         }
         return false;
     }
+
+    /**
+     * checks to see if the user is blocked by this.blocked
+     * iterates through the list of a blocked this.user, if there is a match then
+     * the method returns true, else returns false
+     */
 
     public boolean isBlocked(User user) {
         for (int i = 0; i < blocked.size(); i++) {
