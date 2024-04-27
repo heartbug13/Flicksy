@@ -24,6 +24,11 @@ public class Comment implements Comments , Serializable {
         this.dislikes = 0;
     }
 
+    /**
+     * getter methods for the comments author, content, and likes, dislikes
+     * setter methods for the comments likes and dislikes
+     */
+
     public User getAuthor() {
         return this.author;
     }
@@ -44,12 +49,29 @@ public class Comment implements Comments , Serializable {
         this.dislikes = dislikes;
     }
 
+    /**
+     * method that increments the comments like by one
+     */
+
     public void like() {
         this.likes++;
     }
+
+    /**
+     * method that decrements the comments like by one
+     */
+
     public void dislike() {
         this.dislikes++;
     }
+
+    /**
+     * returns the string version of a comment
+     * Author: prankSinatra
+     * Content: Hey, you, Cee, what up fam? It's your girl Winston aka Winnie the Bish...
+     * Likes: 6
+     * Dislikes: 2
+     */
 
     public String toString() {
         return String.format("Author: %s\nContent: %s\nLikes: %d\nDislikes: %d" ,

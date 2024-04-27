@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUI implements ActionListener {
+public class GUI implements ActionListener, GUIs {
     private static JButton signIn;
     private static JButton signUp;
     private static JButton addComment;
@@ -63,7 +63,9 @@ public class GUI implements ActionListener {
 
             menuBar.add(menu);
 
-            initialPage();
+            GUI gui = new GUI();
+
+            gui.initialPage();
 
             /*
 
@@ -91,7 +93,7 @@ public class GUI implements ActionListener {
      * if the user is signed in they are taken to their newsfeed, if the user is signing up the user is taken to a frame to ask for their name and biography
      */
 
-    private static void initialPage() {
+    public void initialPage() {
         signInFrame = new JFrame();
         signInFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -147,7 +149,7 @@ public class GUI implements ActionListener {
      * once the user created their profile they are taken to their newsfeed
      */
 
-    private static void createProfilePage() {
+    public void createProfilePage() {
         createProfile = new JFrame();
         createProfile.setSize(370, 300);
         createProfile.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -201,7 +203,7 @@ public class GUI implements ActionListener {
      * displays the message "No posts yet by username"
      */
 
-    private static void createUserProfile(User user , List<Post> usersPost) {
+    public void createUserProfile(User user , List<Post> usersPost) {
         userProfile = new JFrame();
         userProfile.setSize(675 , 663);
         userProfile.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -361,7 +363,7 @@ public class GUI implements ActionListener {
      * at the bottom of the page it shows the first of the users post and a button to take them to their full profile
      */
 
-    private static void sneakPeakOfUser(User user , List<Post> usersPost) {
+    public void sneakPeakOfUser(User user , List<Post> usersPost) {
         sneakPeakProfile.setSize(493, 620);
         sneakPeakProfile.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -489,7 +491,7 @@ public class GUI implements ActionListener {
      * each post also shows the username of the post's author
      */
 
-    private static void  createNewsFeed() {
+    public void  createNewsFeed() {
         newsFeed.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ImageIcon icon = new ImageIcon("Flicksy.PNG");
         newsFeed.setIconImage(icon.getImage());
@@ -651,7 +653,7 @@ public class GUI implements ActionListener {
      * display the comments of the post, like/dislike the post, and to friend/unfriend the post
      */
 
-    private static JPanel createPostPanel(Post post , String num , String page) {
+    public JPanel createPostPanel(Post post , String num , String page) {
         JPanel postPanel = new JPanel();
 
         postPanel.setSize(435, 219);
@@ -726,7 +728,7 @@ public class GUI implements ActionListener {
      * also allows the user to add a comment to the post
      */
 
-    private static void createComment(Post post , int postIndex) {
+    public void createComment(Post post , int postIndex) {
         commentBoard.setSize(346 , 300);
         commentBoard.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ImageIcon icon = new ImageIcon("Flicksy.PNG");
