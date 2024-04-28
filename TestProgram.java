@@ -66,6 +66,11 @@ public class TestProgram {
         @SuppressWarnings("FieldCanBeLocal")
         private ByteArrayOutputStream testOut;
 
+        private User user1;
+        private User user2;
+        private User user3;
+
+
         @Before
         public void outputStart() {
             testOut = new ByteArrayOutputStream();
@@ -331,6 +336,62 @@ public class TestProgram {
                 fail();
             }
         }
+
+        //Tests the functionality of "addFriend(User user)", "removeFriend(User user)",
+        // --> "blockUser(User user)", and "unblockUser(User user)"
+        @Test(timeout = 1000)
+        public void testUserManagement() {
+            try {
+                user1.addFriend(user2);
+                assertTrue(user1.isFriend(user2));
+                user1.addFriend(user2); //This should throw an AlreadyAddedAxception
+            } catch (AlreadyAddedException e) {
+                assertNotNull (e);
+            } catch (exception e) {
+                fail("Unexpected Exception: " + e.getMessage());
+            }
+
+            try {
+                user1.removeFriend(user2);
+                assertFalse(user1.isFriend(user2));
+            } catch(Exception e) {
+                fail("Unexpected exception while removing a friend: " +e.getMessage());
+            }
+
+            try {
+                user1.blockUser(user2);
+                assertTrue(user1.isBlocked(user2));
+                user1.unblockUser(user2);
+                assertFalse(user1.isBlocked(user2));
+            } catch (Exception e) {
+                fail("Unexpected exception while blocking/unblocked a user" + e.getMessage());
+
+            }
+        }
+
+        //Tests that the "User" constructor throws the right exceptions when
+        // -> a password is to short and contains invalid characters
+        @Test(timeout = 1000)
+        public void testConstructorValidation() {
+            try {
+                new User("new_user", "short", new Profile("New User", "New Bio"));
+
+            } catch (InvalidPasswordException e) {
+                asserNotNull(e);
+            } catch (Exception e) {
+                fail("Unexpected exception for invalid password: " + e.getMessage());
+            }
+
+            try {
+                new User("invalid-user", "securepassword101112", new Profile("Invalid User", "Invalid Bio"));
+
+            } catch (InvalidUserException e) {
+                assertNotNull(e);
+            } catch (Exception e) {
+                fail("Unexpected exception for invalid username: " + e.getMessage());
+            }
+        }
+
 
         @Test(timeout = 1000)
         public void testClient() {
