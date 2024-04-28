@@ -1285,6 +1285,7 @@ public class GUI implements ActionListener {
                 posts = allPost;
                 checkButton.setText("Like " + posts.get(postIndex).getComments().get(commentIndex).getLikes());
 
+
             } else if (checkButton.getActionCommand().contains("disLikeCommentBoard")) {
                 //checks if the source is from the comment board
                 //if so communicates with the server dislikes the comment
