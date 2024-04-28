@@ -214,6 +214,8 @@ public class Database implements Databases{
 
     public synchronized void readDatabase() {
         try {
+            users = new ArrayList<>();
+            posts = new ArrayList<>();
             BufferedReader bfr = new BufferedReader(new FileReader("userFiles"));
             String line = "";
             int count = 0;

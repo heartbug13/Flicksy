@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUI implements ActionListener, GUIs {
+public class GUI implements ActionListener {
     private static JButton signIn;
     private static JButton signUp;
     private static JButton addComment;
@@ -46,6 +46,7 @@ public class GUI implements ActionListener, GUIs {
      * creates a menu bar that will be added to most frames
      * menu bar contains a button to go to the newsfeed and to the signed in users profile
      * calls the method initialPage() to create the sign in/sign up page
+     *
      */
 
     public static void main(String[] args) {
@@ -68,15 +69,20 @@ public class GUI implements ActionListener, GUIs {
             gui.initialPage();
 
             /*
+            while (true) {
 
-            if (!signInFrame.isVisible() && !userProfile.isVisible() && !newsFeed.isVisible() && !commentBoard.isVisible() &&
-                    !sneakPeakProfile.isVisible() && !createProfile.isVisible()) {
-                System.out.println("closing server");
-                client.sendMessageToServer("close server");
-                client.close();
+                if (!signInFrame.isActive() && !userProfile.isActive() && !newsFeed.isActive() && !commentBoard.isActive() &&
+                        !sneakPeakProfile.isActive() && !createProfile.isActive()) {
+                    System.out.println("closing server");
+                    client.sendMessageToServer("close server");
+                    client.close();
+                    return;
+                }
+
             }
 
              */
+
 
 
         } catch (Exception e) {
@@ -231,20 +237,23 @@ public class GUI implements ActionListener, GUIs {
             List<User> blocked = user.getBlocked();
 
             //JPanel test = new JPanel();
-            for (int i = 0; i < usersPost.size(); i++) {
-                int verify = 0;
-                User author = usersPost.get(i).getAuthor();
-                for (int j = 0; j < blocked.size(); i++) {
-                    if (blocked.get(i).equal(author)) {
-                        verify++;
+            System.out.println(posts);
+            for (int i = 0; i < posts.size(); i++) {
+                if (posts.get(i).getAuthor().equal(user)) {
+                    int verify = 0;
+                    User author = posts.get(i).getAuthor();
+                    for (int j = 0; j < blocked.size(); i++) {
+                        if (blocked.get(i).equal(author)) {
+                            verify++;
+                        }
                     }
-                }
-                if (verify == 0 && !user.equal(signedInUser)) {
-                    JPanel post = createPostPanel(usersPost.get(i), String.valueOf(i), "NewsFeed");
-                    postsPanel.add(post);
-                } else if (verify == 0) {
-                    JPanel post = createPostPanel(usersPost.get(i), String.valueOf(i), "UsersProfile");
-                    postsPanel.add(post);
+                    if (verify == 0 && !user.equal(signedInUser)) {
+                        JPanel post = createPostPanel(posts.get(i), String.valueOf(i), "NewsFeed");
+                        postsPanel.add(post);
+                    } else if (verify == 0) {
+                        JPanel post = createPostPanel(posts.get(i), String.valueOf(i), "UsersProfile");
+                        postsPanel.add(post);
+                    }
                 }
             }
 
@@ -258,6 +267,7 @@ public class GUI implements ActionListener, GUIs {
         //posts.add(postPanel);
 
         JPanel userPanel = new JPanel();
+        userPanel.setBorder(new EmptyBorder(10 , 10, 10,10));
         userPanel.setBackground(Color.white);
         userPanel.setLayout(new BorderLayout());
 
@@ -364,6 +374,7 @@ public class GUI implements ActionListener, GUIs {
      */
 
     public void sneakPeakOfUser(User user , List<Post> usersPost) {
+        sneakPeakProfile = new JFrame();
         sneakPeakProfile.setSize(493, 620);
         sneakPeakProfile.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -445,6 +456,7 @@ public class GUI implements ActionListener, GUIs {
             mainPanel.add(emptyPost, BorderLayout.CENTER);
         } else {
 
+
             int num = 0;
             for (int i = 0; i < posts.size(); i++) {
                 if (usersPost.get(0).equal(posts.get(i))) {
@@ -491,7 +503,9 @@ public class GUI implements ActionListener, GUIs {
      * each post also shows the username of the post's author
      */
 
-    public void  createNewsFeed() {
+    public void  createNewsFeed(List<Post> allPost) {
+        System.out.println("creating news feed");
+        newsFeed = new JFrame();
         newsFeed.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ImageIcon icon = new ImageIcon("Flicksy.PNG");
         newsFeed.setIconImage(icon.getImage());
@@ -552,22 +566,21 @@ public class GUI implements ActionListener, GUIs {
 
         JPanel postsPanel = new JPanel();
 
-        if (posts.size() > 1) {
+        if (allPost.size() > 1) {
             postsPanel.setLayout(new BoxLayout(postsPanel, BoxLayout.Y_AXIS));
         }
         List<User> blocked = signedInUser.getBlocked();
-
         //JPanel test = new JPanel();
-        for (int i = 0; i < posts.size(); i++) {
+        for (int i = 0; i < allPost.size(); i++) {
             int verify = 0;
-            User author = posts.get(i).getAuthor();
+            User author = allPost.get(i).getAuthor();
             for (int j = 0; j < blocked.size(); i++) {
                 if (blocked.get(i).equal(author)) {
                     verify++;
                 }
             }
             if (verify == 0) {
-                JPanel post = createPostPanel(posts.get(i), String.valueOf(i), "NewsFeed");
+                JPanel post = createPostPanel(allPost.get(i), String.valueOf(i), "NewsFeed");
                 postsPanel.add(post);
             }
         }
@@ -634,7 +647,6 @@ public class GUI implements ActionListener, GUIs {
 
 
         userPanel.setBorder(new EmptyBorder(10, 10 , 10, 10));
-        //userPanel.setPreferredSize(new Dimension(171 , 270));
         JPanel southPanel = new JPanel();
         southPanel.add(userPanel);
 
@@ -729,6 +741,7 @@ public class GUI implements ActionListener, GUIs {
      */
 
     public void createComment(Post post , int postIndex) {
+        commentBoard = new JFrame();
         commentBoard.setSize(346 , 300);
         commentBoard.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ImageIcon icon = new ImageIcon("Flicksy.PNG");
@@ -818,7 +831,7 @@ public class GUI implements ActionListener, GUIs {
 
             JButton checkButton = new JButton();
 
-            if (!(e.getSource() == newsFeedButton) || !(e.getSource() == usersProfileButton)) {
+            if (!(e.getSource() == newsFeedButton) && !(e.getSource() == usersProfileButton)) {
                 //checks if the source is not from the newsfeed or user profile button
                 //if source is not from the menu bar, casts the source as a button
                 checkButton = (JButton) e.getSource();
@@ -856,15 +869,8 @@ public class GUI implements ActionListener, GUIs {
                     if (response.equals("true")) {
                         //Object check = inputStream.readObject();
                         signedInUser = (User) client.receiveMessageFromServer();
-                        //int size = (Integer) inputStream.readObject();
+
                         int size = (Integer) client.receiveMessageFromServer();
-                        for (int i = 0; i < size; i++) {
-                            Post post = (Post) client.receiveMessageFromServer();
-
-                            posts.add((post));
-                        }
-
-                        size = (Integer) client.receiveMessageFromServer();
                         for (int i = 0; i < size; i++) {
                             Post post = (Post) client.receiveMessageFromServer();
 
@@ -873,7 +879,17 @@ public class GUI implements ActionListener, GUIs {
                         }
 
                         signInFrame.setVisible(false);
-                        createNewsFeed();
+
+                        client.sendMessageToServer("get all posts");
+                        size = (Integer) client.receiveMessageFromServer();
+                        List<Post> allPost = new ArrayList<>();
+                        for (int i = 0; i < size; i++) {
+                            Post post = (Post) client.receiveMessageFromServer();
+                            allPost.add(post);
+                        }
+
+                        posts = allPost;
+                        createNewsFeed(allPost);
                     } else {
                         JOptionPane.showMessageDialog(null, "Username or Password is incorrect",
                                 "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -944,9 +960,17 @@ public class GUI implements ActionListener, GUIs {
                 client.sendMessageToServer(postIndex);
                 client.sendMessageToServer(comment);
 
-                posts.get(postIndex).addComment(comment);
+                client.sendMessageToServer("get all posts");
+                int size = (Integer) client.receiveMessageFromServer();
+                List<Post> allPost = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    Post post = (Post) client.receiveMessageFromServer();
+                    allPost.add(post);
+                }
+
+                //allPost.get(postIndex).addComment(comment);
                 commentBoard.setVisible(false);
-                createComment(posts.get(postIndex) , postIndex);
+                createComment(allPost.get(postIndex) , postIndex);
             } else if (e.getSource() == addPostButton && !addPost.getText().equals("Start a Post...")) {
                 //checks if the source is fromm the add post button and if the add post content doesn't equal the base text
                 //if everything is okay, adds a post and updates the newsfeed with the new post
@@ -955,10 +979,18 @@ public class GUI implements ActionListener, GUIs {
                 client.sendMessageToServer("add post");
                 client.sendMessageToServer(post);
 
-                posts.add(post);
                 postByUser.add(post);
                 newsFeed.setVisible(false);
-                createNewsFeed();
+
+                client.sendMessageToServer("get all posts");
+                int size = (Integer) client.receiveMessageFromServer();
+                List<Post> allPost = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    Post post1 = (Post) client.receiveMessageFromServer();
+                    allPost.add(post1);
+                }
+
+                createNewsFeed(allPost);
             } else if (e.getSource() == searchButton && !search.getText().equals("Search...")) {
                 //checks if the source is from search button and the search text doesn't equal the base text
                 //if everything is okay, sends the search string to the server to find all the users with username that contains the search message
@@ -1140,7 +1172,16 @@ public class GUI implements ActionListener, GUIs {
                 commentBoard.setVisible(false);
                 sneakPeakProfile.setVisible(false);
                 signInFrame.setVisible(false);
-                createNewsFeed();
+
+                client.sendMessageToServer("get all posts");
+                int size = (Integer) client.receiveMessageFromServer();
+                List<Post> allPost = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    Post post = (Post) client.receiveMessageFromServer();
+                    allPost.add(post);
+                }
+
+                createNewsFeed(allPost);
             } else if (e.getSource() == usersProfileButton) {
                 //checks if the source is from the user profile button
                 //if so creates the user's profile and closes any open frames
@@ -1165,13 +1206,16 @@ public class GUI implements ActionListener, GUIs {
                 signedInUser.getProfile().setName(name.getText());
                 createProfile.setVisible(false);
 
+                client.sendMessageToServer("get all posts");
                 int size = (Integer) client.receiveMessageFromServer();
+                List<Post> allPost = new ArrayList<>();
                 for (int i = 0; i < size; i++) {
                     Post post = (Post) client.receiveMessageFromServer();
-                    posts.add(post);
+                    allPost.add(post);
                 }
 
-                createNewsFeed();
+
+                createNewsFeed(allPost);
             }
             int index = checkButton.getActionCommand().indexOf("-");
 
@@ -1180,7 +1224,22 @@ public class GUI implements ActionListener, GUIs {
                 //checks if the source is from the news feed or from sneak peak page
                 //if so creates the comment board with the post and the index of the post
                 int postIndex = Integer.parseInt(checkButton.getActionCommand().substring(index + 1));
-                createComment(posts.get(postIndex) , postIndex);
+                System.out.println(checkButton.getActionCommand());
+
+                client.sendMessageToServer("get all posts");
+                int size = (Integer) client.receiveMessageFromServer();
+                List<Post> allPost = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    Post post = (Post) client.receiveMessageFromServer();
+                    allPost.add(post);
+                }
+
+                //System.out.println(allPost);
+                //System.out.println();
+                //System.out.println(allPost.get(postIndex));
+                //System.out.println(allPost.get(postIndex).getComments());
+
+                createComment(allPost.get(postIndex) , postIndex);
             } else if (checkButton.getActionCommand().contains("likeNewsFeed") ||
                     checkButton.getActionCommand().contains("likeSneakPeakPage")) {
                 //checks if the source is from the news feed or from the sneak peak page
@@ -1211,12 +1270,21 @@ public class GUI implements ActionListener, GUIs {
 
                 index = updated.indexOf("-");
                 int commentIndex = Integer.parseInt(updated.substring(index + 1));
-                posts.get(postIndex).getComments().get(commentIndex).like();
-                checkButton.setText("Like " + posts.get(postIndex).getComments().get(commentIndex).getLikes());
 
                 client.sendMessageToServer("like comment");
                 client.sendMessageToServer(postIndex);
                 client.sendMessageToServer(commentIndex);
+
+                client.sendMessageToServer("get all posts");
+                int size = (Integer) client.receiveMessageFromServer();
+                List<Post> allPost = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    Post post = (Post) client.receiveMessageFromServer();
+                    allPost.add(post);
+                }
+                posts = allPost;
+                checkButton.setText("Like " + posts.get(postIndex).getComments().get(commentIndex).getLikes());
+
             } else if (checkButton.getActionCommand().contains("disLikeCommentBoard")) {
                 //checks if the source is from the comment board
                 //if so communicates with the server dislikes the comment
@@ -1225,6 +1293,16 @@ public class GUI implements ActionListener, GUIs {
 
                 index = updated.indexOf("-");
                 int commentIndex = Integer.parseInt(updated.substring(index + 1));
+
+                client.sendMessageToServer("get all posts");
+                int size = (Integer) client.receiveMessageFromServer();
+                List<Post> allPost = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    Post post = (Post) client.receiveMessageFromServer();
+                    allPost.add(post);
+                }
+                posts = allPost;
+
                 posts.get(postIndex).getComments().get(commentIndex).dislike();
                 checkButton.setText("Dislike " + posts.get(postIndex).getComments().get(commentIndex).getDislikes());
 
@@ -1250,7 +1328,16 @@ public class GUI implements ActionListener, GUIs {
 
                     signedInUser.addFriend(friend);
                     newsFeed.setVisible(false);
-                    createNewsFeed();
+
+                    client.sendMessageToServer("get all posts");
+                    int size = (Integer) client.receiveMessageFromServer();
+                    List<Post> allPost = new ArrayList<>();
+                    for (int i = 0; i < size; i++) {
+                        Post post = (Post) client.receiveMessageFromServer();
+                        allPost.add(post);
+                    }
+
+                    createNewsFeed(allPost);
                 } else if (response.equals("you have already added this user as a friend")
                         || response.equals("you have been blocked by this user")
                         || response.equals("friend and user are equal")) {
@@ -1278,7 +1365,16 @@ public class GUI implements ActionListener, GUIs {
 
                     signedInUser.removeFriend(friend);
                     newsFeed.setVisible(false);
-                    createNewsFeed();
+
+                    client.sendMessageToServer("get all posts");
+                    int size = (Integer) client.receiveMessageFromServer();
+                    List<Post> allPost = new ArrayList<>();
+                    for (int i = 0; i < size; i++) {
+                        Post post = (Post) client.receiveMessageFromServer();
+                        allPost.add(post);
+                    }
+
+                    createNewsFeed(allPost);
                 } else if (response.equals("friend and user are equal")) {
                     JOptionPane.showMessageDialog(null, response , "Error",
                             JOptionPane.INFORMATION_MESSAGE);

@@ -1,3 +1,4 @@
+import java.awt.image.DataBuffer;
 import java.io.*;
 import java.net.*;
 import java.net.Socket;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ClientHandler implements Runnable , Serializable{
 
     private final Socket clientSocket;
-    private Database database;
+    private static Database database;
 
     public ClientHandler(Socket clientSocket , Database database) {
         this.clientSocket = clientSocket;
@@ -36,6 +37,7 @@ public class ClientHandler implements Runnable , Serializable{
 
         ObjectOutputStream outputStream = null;
         ObjectInputStream inputStream = null;
+
         try {
             //creates output and input stream with the client socket
             System.out.println("connection established");
@@ -45,6 +47,7 @@ public class ClientHandler implements Runnable , Serializable{
 
             String inputLine = "";
             while ((inputLine = (String) inputStream.readObject()) != null) {
+                database.readDatabase();
 
                 if (inputLine.equals("sign in")) {
                     //checks if the input line is sign in
@@ -66,13 +69,7 @@ public class ClientHandler implements Runnable , Serializable{
 
                         outputStream.writeObject("true");
                         outputStream.writeObject(checkUser);
-                        outputStream.writeObject(database.getPosts().size());
-                        outputStream.flush();
 
-                        for (int i = 0; i < database.getPosts().size(); i++) {
-                            outputStream.writeObject(database.getPosts().get(i));
-                            outputStream.flush();
-                        }
 
                         List<Post> postByUser = database.getPostsByUser(checkUser);
                         outputStream.writeObject(postByUser.size());
@@ -101,6 +98,8 @@ public class ClientHandler implements Runnable , Serializable{
                         database.addUser(new User(username, password, newUsersProfile));
                         outputStream.writeObject("creating user");
                         outputStream.flush();
+                    } catch (InvalidPasswordException | InvalidUserException e) {
+                        outputStream.writeObject(e.getMessage());
                     } catch (AlreadyAddedException e) {
                         outputStream.writeObject(e.getMessage());
                         outputStream.flush();
@@ -312,16 +311,27 @@ public class ClientHandler implements Runnable , Serializable{
                         outputStream.flush();
                     }
 
+                } else if (inputLine.equals("close server")) {
+                    outputStream.close();;
+                    inputStream.close();
+                    return;
+                } else if (inputLine.equals("get all posts")) {
+                    List<Post> allPost = database.getPosts();
+                    outputStream.writeObject(allPost.size());
+                    outputStream.flush();
+                    for (int i = 0; i < allPost.size(); i++) {
+                        outputStream.writeObject(allPost.get(i));
+                        outputStream.flush();
+                    }
                 }
             }
 
-            outputStream.close();
-            inputStream.close();
 
         } catch (Exception e) {
             e.printStackTrace();
 
         } finally { //**
+            System.out.println("closing down");
             database.writeDatabase();
         }
     }
