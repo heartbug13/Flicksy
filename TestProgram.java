@@ -377,7 +377,7 @@ public class TestProgram {
                 new User("new_user", "short", new Profile("New User", "New Bio"));
 
             } catch (InvalidPasswordException e) {
-                //asserNotNull(e);
+                asserNotNull(e);
             } catch (Exception e) {
                 fail("Unexpected exception for invalid password: " + e.getMessage());
             }
