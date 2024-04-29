@@ -314,6 +314,7 @@ public class GUI implements ActionListener {
         userInfo.setLayout(new BoxLayout(userInfo , BoxLayout.Y_AXIS));
         userInfo.add(friendPanel);
         userInfo.add(postPanel);
+        userInfo.setBorder(new EmptyBorder(10 , 10 , 10 ,10));
         userInfo.setBackground(Color.white);
 
         userPanel.add(namePanel , BorderLayout.NORTH);
@@ -367,6 +368,7 @@ public class GUI implements ActionListener {
         panel.add(southPanel);
 
         main.add(panel , BorderLayout.WEST);
+        main.add(new JLabel("hello") , BorderLayout.CENTER);
 
         userProfile.add(main , BorderLayout.CENTER);
         userProfile.add(new JPanel() , BorderLayout.NORTH);
