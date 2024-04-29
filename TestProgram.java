@@ -375,9 +375,8 @@ public class TestProgram {
         public void testConstructorValidation() {
             try {
                 new User("new_user", "short", new Profile("New User", "New Bio"));
-
+                fail("Ensure that InvalidPasswordException is thrown");
             } catch (InvalidPasswordException e) {
-                asserNotNull(e);
             } catch (Exception e) {
                 fail("Unexpected exception for invalid password: " + e.getMessage());
             }
