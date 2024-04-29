@@ -237,7 +237,7 @@ public class GUI implements ActionListener {
             List<User> blocked = user.getBlocked();
 
             //JPanel test = new JPanel();
-            System.out.println(posts);
+            //System.out.println(posts);
             for (int i = 0; i < posts.size(); i++) {
                 if (posts.get(i).getAuthor().equal(user)) {
                     int verify = 0;
@@ -347,6 +347,7 @@ public class GUI implements ActionListener {
             buttonPanel.add(friendButton, BorderLayout.NORTH);
             buttonPanel.add(new JPanel(), BorderLayout.CENTER);
             buttonPanel.add(block, BorderLayout.SOUTH);
+            buttonPanel.setBorder(new EmptyBorder(10 ,10 , 10 ,10));
 
             southPanel.add(buttonPanel, BorderLayout.CENTER);
         }
