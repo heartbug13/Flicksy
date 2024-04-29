@@ -345,8 +345,9 @@ public class TestProgram {
                 user1.addFriend(user2);
                 assertTrue(user1.isFriend(user2));
                 user1.addFriend(user2); //This should throw an AlreadyAddedAxception
+                fail("Ensure that you throw an AlreadyAddedException");
             } catch (AlreadyAddedException e) {
-                assertNotNull (e);
+                assertNotNull(e);
             } catch (Exception e) {
                 fail("Unexpected Exception: " + e.getMessage());
             }
@@ -354,8 +355,8 @@ public class TestProgram {
             try {
                 user1.removeFriend(user2);
                 assertFalse(user1.isFriend(user2));
-            } catch(Exception e) {
-                fail("Unexpected exception while removing a friend: " +e.getMessage());
+            } catch (Exception e) {
+                fail("Unexpected exception while removing a friend: " + e.getMessage());
             }
 
             try {
@@ -377,13 +378,14 @@ public class TestProgram {
                 new User("new_user", "short", new Profile("New User", "New Bio"));
                 fail("Ensure that InvalidPasswordException is thrown");
             } catch (InvalidPasswordException e) {
+                assertNotNull(e);
             } catch (Exception e) {
                 fail("Unexpected exception for invalid password: " + e.getMessage());
             }
 
             try {
                 new User("invalid-user", "securepassword101112", new Profile("Invalid User", "Invalid Bio"));
-
+                fail("Ensure that you throw a InvalidUserException");
             } catch (InvalidUserException e) {
                 assertNotNull(e);
             } catch (Exception e) {
@@ -433,7 +435,7 @@ public class TestProgram {
 
             try {
                 Profile jessProfile = new Profile("Jessica Day" , jessBio);
-                Profile nickProfile = new Profile ("Nick Miller" , nickBio);
+                Profile nickProfile = new Profile("Nick Miller" , nickBio);
                 Profile winstonProfile = new Profile("Winston Bishop" , winstonBio);
                 Profile ceceProfile = new Profile("Cece Parekh" , ceceBio);
 

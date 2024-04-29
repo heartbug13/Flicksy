@@ -14,7 +14,7 @@ import java.util.List;
  *
  */
 
-public class Database implements Databases{
+public class Database implements Databases {
     private ArrayList<User> users;
     private ArrayList<Post> posts;
 

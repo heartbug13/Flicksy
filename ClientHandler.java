@@ -16,7 +16,7 @@ import java.util.List;
  *
  */
 
-public class ClientHandler implements Runnable , Serializable{
+public class ClientHandler implements Runnable , Serializable {
 
     private final Socket clientSocket;
     private static Database database;
@@ -65,7 +65,7 @@ public class ClientHandler implements Runnable , Serializable{
                         outputStream.writeObject("false");
                         outputStream.flush();
 
-                    } else if (checkUser.verifyPassword(password)){
+                    } else if (checkUser.verifyPassword(password)) {
 
                         outputStream.writeObject("true");
                         outputStream.writeObject(checkUser);
@@ -228,6 +228,7 @@ public class ClientHandler implements Runnable , Serializable{
                         database.getUserByUsername(user.getUsername()).removeFriend(friend);
                         outputStream.writeObject("adding a friend");
                         outputStream.writeObject(friend);
+                        outputStream.writeObject(database.getUserByUsername(user.getUsername()));
                         outputStream.flush();
                         database.writeDatabase();
                     } else {
@@ -285,6 +286,7 @@ public class ClientHandler implements Runnable , Serializable{
                     database.getUserByUsername(user.getUsername()).unblockUser(unBlocked);
 
                     outputStream.writeObject(unBlocked);
+                    outputStream.writeObject(database.getUserByUsername(user.getUsername()));
                     outputStream.flush();
 
                     database.writeDatabase();
@@ -312,7 +314,7 @@ public class ClientHandler implements Runnable , Serializable{
                     }
 
                 } else if (inputLine.equals("close server")) {
-                    outputStream.close();;
+                    outputStream.close();
                     inputStream.close();
                     return;
                 } else if (inputLine.equals("get all posts")) {

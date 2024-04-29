@@ -19,7 +19,8 @@ public class User implements Users , Serializable {
     private Profile profile;
     private List<User> blocked;
 
-    public User(String username , String password , Profile profile) throws InvalidPasswordException, InvalidUserException {
+    public User(String username , String password , Profile profile) throws InvalidPasswordException ,
+            InvalidUserException {
         if (password.length() < 12) {
             throw new InvalidPasswordException("Password must be 12 characters long");
         }
@@ -56,7 +57,7 @@ public class User implements Users , Serializable {
      * checks that the user is not on the users blocked list
      */
 
-    public void addFriend(User user) throws BlockedUserException , AlreadyAddedException{
+    public void addFriend(User user) throws BlockedUserException , AlreadyAddedException {
         int verify = 0;
         //checks if there is user is already a friend
         for (User friend : friends) {

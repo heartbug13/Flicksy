@@ -47,7 +47,8 @@ public class Client implements Clients {
      * creates a user with the information parsed in
      */
 
-    public User makeUser(String username, String password, Profile profile) throws InvalidPasswordException, InvalidUserException {
+    public User makeUser(String username, String password, Profile profile) throws InvalidPasswordException,
+            InvalidUserException {
         return new User(username, password, profile);
     }
 

@@ -82,7 +82,8 @@ public class GUI implements ActionListener {
             /*
             while (true) {
 
-                if (!signInFrame.isActive() && !userProfile.isActive() && !newsFeed.isActive() && !commentBoard.isActive() &&
+                if (!signInFrame.isActive() && !userProfile.isActive() && !newsFeed.isActive() &&
+                !commentBoard.isActive() &&
                         !sneakPeakProfile.isActive() && !createProfile.isActive()) {
                     System.out.println("closing server");
                     client.sendMessageToServer("close server");
@@ -104,10 +105,13 @@ public class GUI implements ActionListener {
     /**
      * creates the initial page that the user sees once they start Flicksy
      * includes a welcome message that changes depending on either or not the user is signing in or signing up
-     * sign in and sign up panel asks for the users username and password, the password is displayed as dots to protect the users privacy
-     * has a button to submit the information to the server to either verify the users information or create another user
+     * sign in and sign up panel asks for the users username and password, the password is displayed as dots to
+     * protect the users privacy
+     * has a button to submit the information to the server to either verify the users information or create another
+     * user
      * has a button to switch between the option to signin or signup
-     * if the user is signed in they are taken to their newsfeed, if the user is signing up the user is taken to a frame to ask for their name and biography
+     * if the user is signed in they are taken to their newsfeed, if the user is signing up the user is taken to a
+     * frame to ask for their name and biography
      */
 
     public void initialPage() {
@@ -115,24 +119,24 @@ public class GUI implements ActionListener {
         signInFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         signInFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        signInFrame.setSize(470, 470);
+        signInFrame.setSize(470 , 470);
         signInFrame.setLayout(new BorderLayout());
 
         welcomeMessage = new JLabel("Welcome to your Flicksy Community");
-        welcomeMessage.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        welcomeMessage.setFont(new Font("SansSerif" , Font.PLAIN, 20));
 
         JPanel topPanel = new JPanel();
         topPanel.add(welcomeMessage);
-        signInFrame.add(new JPanel(), BorderLayout.WEST);
-        signInFrame.add(new JPanel(), BorderLayout.EAST);
-        signInFrame.add(new JPanel(), BorderLayout.SOUTH);
-        signInFrame.add(topPanel, BorderLayout.NORTH);
+        signInFrame.add(new JPanel() , BorderLayout.WEST);
+        signInFrame.add(new JPanel() , BorderLayout.EAST);
+        signInFrame.add(new JPanel() , BorderLayout.SOUTH);
+        signInFrame.add(topPanel , BorderLayout.NORTH);
         JPanel signInPanel = new JPanel();
         signInPanel.setBackground(Color.white);
         JLabel userName = new JLabel("Username:");
         getUserName = new JTextField(20);
         getUserName.setColumns(35);
-        Color grey = new Color(216, 216, 216);
+        Color grey = new Color(216 , 216 , 216);
         getUserName.setBorder(new LineBorder(grey, 1, true));
 
         JLabel password = new JLabel("Password:");
@@ -153,22 +157,23 @@ public class GUI implements ActionListener {
         signInPanel.add(signUp);
 
         signInFrame.add(signInPanel, BorderLayout.CENTER);
-        signInFrame.setMinimumSize(new Dimension(470, 200));
-        signInFrame.setMaximumSize(new Dimension(500, 500));
+        signInFrame.setMinimumSize(new Dimension(470 , 200));
+        signInFrame.setMaximumSize(new Dimension(500 , 500));
         //frame.pack();
         signInFrame.setVisible(true);
     }
 
     /**
      * creates a frame to ask for the users name and bio
-     * uses a jtextfield to ask for their name, but a jtextarea to ask for their because their bio will likely be longer
+     * uses a jtextfield to ask for their name, but a jtextarea to ask for their because their bio will likely be
+     * longer
      * has a button to summit the information to the server
      * once the user created their profile they are taken to their newsfeed
      */
 
     public void createProfilePage() {
         createProfile = new JFrame();
-        createProfile.setSize(370, 300);
+        createProfile.setSize(370 , 300);
         createProfile.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         JPanel main = new JPanel();
@@ -199,7 +204,7 @@ public class GUI implements ActionListener {
         main.add(makeProfile , BorderLayout.SOUTH);
         getName.setBackground(Color.white);
         getBio.setBackground(Color.white);
-        main.setBorder(new EmptyBorder(10 , 10, 10 ,10));
+        main.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
 
         createProfile.add(main , BorderLayout.CENTER);
         createProfile.add(new JPanel() , BorderLayout.NORTH);
@@ -214,7 +219,8 @@ public class GUI implements ActionListener {
     /**
      * creates a profile for the user
      * on the left side of the frame holds the user's information including their actual name and their username
-     * left side of the panel also has two buttons, one button to friend/unfriend the user and one button two block/unblock the user
+     * left side of the panel also has two buttons, one button to friend/unfriend the user and one button two
+     * block/unblock the user
      * it also shows the number of friends and posts the user has and their bio
      * on the right side of the frame displays all the users post, if there is no post it
      * displays the message "No posts yet by username"
@@ -233,17 +239,17 @@ public class GUI implements ActionListener {
 
         if (usersPost.isEmpty()) {
             JPanel emptyPost = new JPanel();
-            emptyPost.setBorder(new EmptyBorder(40, 10, 40, 10));
+            emptyPost.setBorder(new EmptyBorder(40 , 10 , 40 , 10));
             emptyPost.setBackground(Color.white);
             emptyPost.setPreferredSize(new Dimension(435, 154));
 
             emptyPost.add(new JLabel("No posts yet by " + user.getUsername()));
-            main.add(emptyPost, BorderLayout.EAST);
+            main.add(emptyPost , BorderLayout.EAST);
 
         } else {
 
             if (usersPost.size() > 1) {
-                postsPanel.setLayout(new BoxLayout(postsPanel, BoxLayout.Y_AXIS));
+                postsPanel.setLayout(new BoxLayout(postsPanel , BoxLayout.Y_AXIS));
             }
             List<User> blocked = user.getBlocked();
 
@@ -259,10 +265,10 @@ public class GUI implements ActionListener {
                         }
                     }
                     if (verify == 0 && !user.equal(signedInUser)) {
-                        JPanel post = createPostPanel(posts.get(i), String.valueOf(i), "NewsFeed");
+                        JPanel post = createPostPanel(posts.get(i) , String.valueOf(i) , "NewsFeed");
                         postsPanel.add(post);
                     } else if (verify == 0) {
-                        JPanel post = createPostPanel(posts.get(i), String.valueOf(i), "UsersProfile");
+                        JPanel post = createPostPanel(posts.get(i) , String.valueOf(i) , "UsersProfile");
                         postsPanel.add(post);
                     }
                 }
@@ -278,7 +284,7 @@ public class GUI implements ActionListener {
         //posts.add(postPanel);
 
         JPanel userPanel = new JPanel();
-        userPanel.setBorder(new EmptyBorder(10 , 10, 10,10));
+        userPanel.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
         userPanel.setBackground(Color.white);
         userPanel.setLayout(new BorderLayout());
 
@@ -296,25 +302,25 @@ public class GUI implements ActionListener {
         postPanel.add(new JLabel("Post: ") , BorderLayout.WEST);
         postPanel.add(new JLabel(String.valueOf(usersPost.size())) , BorderLayout.EAST);
 
-        JTextPane bio = new JTextPane();
-        bio.setText(user.getProfile().getBio());
-        bio.setPreferredSize(new Dimension(144 , 50));
+        JTextPane bio1 = new JTextPane();
+        bio1.setText(user.getProfile().getBio());
+        bio1.setPreferredSize(new Dimension(144 , 50));
 
         JPanel namePanel = new JPanel();
         namePanel.setLayout(new BorderLayout());
         JLabel username = new JLabel(user.getUsername() , JLabel.CENTER);
         Font bold = new Font(username.getFont().getName() , Font.BOLD , 12);
         username.setFont(bold);
-        JLabel name = new JLabel(user.getProfile().getName() , JLabel.CENTER);
+        JLabel name1 = new JLabel(user.getProfile().getName() , JLabel.CENTER);
         namePanel.add(username , BorderLayout.NORTH);
-        namePanel.add(name , BorderLayout.SOUTH);
+        namePanel.add(name1 , BorderLayout.SOUTH);
         namePanel.setBackground(Color.white);
 
         JPanel userInfo = new JPanel();
         userInfo.setLayout(new BoxLayout(userInfo , BoxLayout.Y_AXIS));
         userInfo.add(friendPanel);
         userInfo.add(postPanel);
-        userInfo.setBorder(new EmptyBorder(10 , 10 , 10 ,10));
+        userInfo.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
         userInfo.setBackground(Color.white);
 
         userPanel.add(namePanel , BorderLayout.NORTH);
@@ -324,14 +330,13 @@ public class GUI implements ActionListener {
         bioPanel.setLayout(new BorderLayout());
         bioPanel.add(new JLabel("Bio" , JLabel.CENTER) , BorderLayout.NORTH);
         bioPanel.add(new JLabel(" " ) , BorderLayout.CENTER);
-        //bioPanel.add(new JLabel(" "));
-        JScrollPane test = new JScrollPane(bio);
+        JScrollPane test = new JScrollPane(bio1);
         test.setPreferredSize(new Dimension(171 , 120));
         bioPanel.add(test , BorderLayout.SOUTH);
         bioPanel.setBackground(Color.white);
 
         userPanel.add(bioPanel , BorderLayout.SOUTH);
-        userPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        userPanel.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
 
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new BorderLayout());
@@ -350,7 +355,7 @@ public class GUI implements ActionListener {
             if (signedInUser.isBlocked(user)) {
                 block.setText("Unblock");
             }
-            block.setPreferredSize(new Dimension(171, 18));
+            block.setPreferredSize(new Dimension(171 , 18));
             block.addActionListener(new GUI());
             block.setActionCommand(user.getUsername());
 
@@ -359,7 +364,7 @@ public class GUI implements ActionListener {
             buttonPanel.add(friendButton, BorderLayout.NORTH);
             buttonPanel.add(new JPanel(), BorderLayout.CENTER);
             buttonPanel.add(block, BorderLayout.SOUTH);
-            buttonPanel.setBorder(new EmptyBorder(10 ,10 , 10 ,10));
+            buttonPanel.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
 
             southPanel.add(buttonPanel, BorderLayout.CENTER);
         }
@@ -389,7 +394,7 @@ public class GUI implements ActionListener {
 
     public void sneakPeakOfUser(User user , List<Post> usersPost) {
         sneakPeakProfile = new JFrame();
-        sneakPeakProfile.setSize(493, 620);
+        sneakPeakProfile.setSize(493 , 620);
         sneakPeakProfile.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         JPanel mainPanel = new JPanel();
@@ -406,32 +411,32 @@ public class GUI implements ActionListener {
         friendPanel.setLayout(new BorderLayout());
         friendPanel.setBackground(Color.white);
         friendPanel.add(new JLabel(" "), BorderLayout.NORTH);
-        friendPanel.add(new JLabel("Friends: "), BorderLayout.WEST);
+        friendPanel.add(new JLabel("Friends: ") , BorderLayout.WEST);
         JLabel friendNum = new JLabel(String.valueOf(user.getFriends().size()));
-        friendPanel.add(friendNum, BorderLayout.EAST);
+        friendPanel.add(friendNum , BorderLayout.EAST);
 
         JPanel postPanel = new JPanel();
         postPanel.setLayout(new BorderLayout());
         postPanel.setBackground(Color.white);
-        postPanel.add(new JLabel("Post: "), BorderLayout.WEST);
-        postPanel.add(new JLabel(String.valueOf(usersPost.size())), BorderLayout.EAST);
+        postPanel.add(new JLabel("Post: ") , BorderLayout.WEST);
+        postPanel.add(new JLabel(String.valueOf(usersPost.size())) , BorderLayout.EAST);
 
-        JTextPane bio = new JTextPane();
-        bio.setText(user.getProfile().getBio());
-        bio.setPreferredSize(new Dimension(450, 90));
+        JTextPane bio1 = new JTextPane();
+        bio1.setText(user.getProfile().getBio());
+        bio1.setPreferredSize(new Dimension(450, 90));
 
         JPanel namePanel = new JPanel();
         namePanel.setLayout(new BorderLayout());
-        JLabel username = new JLabel(user.getUsername(), JLabel.CENTER);
-        Font bold = new Font(username.getFont().getName(), Font.BOLD, 12);
+        JLabel username = new JLabel(user.getUsername() , JLabel.CENTER);
+        Font bold = new Font(username.getFont().getName() , Font.BOLD, 12);
         username.setFont(bold);
-        JLabel name = new JLabel(user.getProfile().getName(), JLabel.CENTER);
-        namePanel.add(username, BorderLayout.NORTH);
-        namePanel.add(name, BorderLayout.SOUTH);
+        JLabel name1 = new JLabel(user.getProfile().getName() , JLabel.CENTER);
+        namePanel.add(username , BorderLayout.NORTH);
+        namePanel.add(name1 , BorderLayout.SOUTH);
         namePanel.setBackground(Color.white);
 
         JPanel userInfo = new JPanel();
-        userInfo.setLayout(new BoxLayout(userInfo, BoxLayout.Y_AXIS));
+        userInfo.setLayout(new BoxLayout(userInfo , BoxLayout.Y_AXIS));
         //userInfo.add(friendPanel);
         //userInfo.add(postPanel);
         userInfo.setBackground(Color.white);
@@ -447,11 +452,11 @@ public class GUI implements ActionListener {
         bioPanel.add(new JLabel("Bio" , JLabel.CENTER) , BorderLayout.NORTH);
         bioPanel.add(new JLabel(" " ) , BorderLayout.CENTER);
         //bioPanel.add(new JLabel(" "));
-        bioPanel.add(new JScrollPane(bio) , BorderLayout.SOUTH);
+        bioPanel.add(new JScrollPane(bio1) , BorderLayout.SOUTH);
         bioPanel.setBackground(Color.white);
 
         userPanel.add(bioPanel , BorderLayout.SOUTH);
-        userPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        userPanel.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
 
         JPanel panel = new JPanel();
         panel.add(new JPanel());
@@ -462,9 +467,9 @@ public class GUI implements ActionListener {
             JPanel emptyPost = new JPanel();
             emptyPost.setLayout(new BorderLayout());
             emptyPost.add(new JPanel());
-            emptyPost.setBorder(new EmptyBorder(10, 10, 10, 10));
+            emptyPost.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
             emptyPost.setBackground(Color.white);
-            emptyPost.setPreferredSize(new Dimension(435, 154));
+            emptyPost.setPreferredSize(new Dimension(435 , 154));
 
             emptyPost.add(new JLabel("No posts yet by " + user.getUsername()));
             mainPanel.add(emptyPost, BorderLayout.CENTER);
@@ -513,12 +518,13 @@ public class GUI implements ActionListener {
      * at the left side of the news feed page it shows the signed in users information
      * this included the users name, username, number of posts and friends, and their bio
      * the right side are all the posts
-     * each post has the option to display the comments of the posts, like or dislike the post and friend/unfriend the author of the post
+     * each post has the option to display the comments of the posts, like or dislike the post and friend/unfriend
+     * the author of the post
      * each post also shows the username of the post's author
      */
 
     public void  createNewsFeed(List<Post> allPost) {
-        System.out.println("creating news feed");
+        //System.out.println("creating news feed");
         newsFeed = new JFrame();
         newsFeed.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         ImageIcon icon = new ImageIcon("Flicksy.PNG");
@@ -533,7 +539,7 @@ public class GUI implements ActionListener {
         JPanel newPanel = new JPanel();
         //newPanel.setBackground(Color.white);
         newPanel.setLayout(new BorderLayout());
-        newPanel.setBorder(new EmptyBorder(10 , 10 , 10 ,10));
+        newPanel.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
 
         Color lightGrey = new Color(216 , 216 , 216);
         search = new JTextField();
@@ -546,7 +552,7 @@ public class GUI implements ActionListener {
         addPost.setLineWrap(true);
 
         JPanel searchPanel = new JPanel();
-        searchPanel.setBorder(new EmptyBorder(10 , 10 , 10 ,10));
+        searchPanel.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
         searchPanel.setBackground(Color.white);
         searchButton = new JButton("Search");
         searchButton.addActionListener(new GUI());
@@ -555,7 +561,7 @@ public class GUI implements ActionListener {
         searchPanel.add(searchButton , BorderLayout.SOUTH);
 
         JPanel addPostPanel = new JPanel();
-        addPostPanel.setBorder(new EmptyBorder(10 , 10 , 10 ,10));
+        addPostPanel.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
         addPostPanel.setBackground(Color.white);
         addPostButton = new JButton("Add Post");
         addPostButton.addActionListener(new GUI());
@@ -581,7 +587,7 @@ public class GUI implements ActionListener {
         JPanel postsPanel = new JPanel();
 
         if (allPost.size() > 1) {
-            postsPanel.setLayout(new BoxLayout(postsPanel, BoxLayout.Y_AXIS));
+            postsPanel.setLayout(new BoxLayout(postsPanel , BoxLayout.Y_AXIS));
         }
         List<User> blocked = signedInUser.getBlocked();
         //JPanel test = new JPanel();
@@ -594,7 +600,7 @@ public class GUI implements ActionListener {
                 }
             }
             if (verify == 0) {
-                JPanel post = createPostPanel(allPost.get(i), String.valueOf(i), "NewsFeed");
+                JPanel post = createPostPanel(allPost.get(i) , String.valueOf(i), "NewsFeed");
                 postsPanel.add(post);
             }
         }
@@ -604,7 +610,7 @@ public class GUI implements ActionListener {
         scrollPane.setBorder(new LineBorder(newsFeed.getBackground()));
 
         //scrollPane.setVerticalScrollBar();
-        newsFeed.add(scrollPane, BorderLayout.EAST);
+        newsFeed.add(scrollPane , BorderLayout.EAST);
 
         JPanel userPanel = new JPanel();
         userPanel.setBackground(Color.white);
@@ -624,18 +630,18 @@ public class GUI implements ActionListener {
         postPanel.add(new JLabel("Post: ") , BorderLayout.WEST);
         postPanel.add(new JLabel(String.valueOf(postByUser.size())) , BorderLayout.EAST);
 
-        JTextPane bio = new JTextPane();
-        bio.setText(signedInUser.getProfile().getBio());
-        bio.setPreferredSize(new Dimension(144 , 120));
+        JTextPane bio1 = new JTextPane();
+        bio1.setText(signedInUser.getProfile().getBio());
+        bio1.setPreferredSize(new Dimension(144 , 120));
 
         JPanel namePanel = new JPanel();
         namePanel.setLayout(new BorderLayout());
         JLabel username = new JLabel(signedInUser.getUsername() , JLabel.CENTER);
         Font bold = new Font(username.getFont().getName() , Font.BOLD , 12);
         username.setFont(bold);
-        JLabel name = new JLabel(signedInUser.getProfile().getName() , JLabel.CENTER);
+        JLabel name1 = new JLabel(signedInUser.getProfile().getName() , JLabel.CENTER);
         namePanel.add(username , BorderLayout.NORTH);
-        namePanel.add(name , BorderLayout.SOUTH);
+        namePanel.add(name1 , BorderLayout.SOUTH);
         namePanel.setBackground(Color.white);
 
         JPanel userInfo = new JPanel();
@@ -651,7 +657,7 @@ public class GUI implements ActionListener {
         bioPanel.setLayout(new BoxLayout(bioPanel , BoxLayout.PAGE_AXIS));
         bioPanel.add(new JLabel("Bio"));
         bioPanel.add(new JLabel(" "));
-        bioPanel.add(new JScrollPane(bio));
+        bioPanel.add(new JScrollPane(bio1));
         bioPanel.setBackground(Color.white);
 
         JPanel bioPanel1 = new JPanel();
@@ -660,7 +666,7 @@ public class GUI implements ActionListener {
         userPanel.add(bioPanel , BorderLayout.SOUTH);
 
 
-        userPanel.setBorder(new EmptyBorder(10, 10 , 10, 10));
+        userPanel.setBorder(new EmptyBorder(10 , 10 , 10, 10));
         JPanel southPanel = new JPanel();
         southPanel.add(userPanel);
 
@@ -673,7 +679,8 @@ public class GUI implements ActionListener {
 
     /**
      * creates a post panel for the post
-     * takes in the post that is being displayed, the index of the post in the posts array, and which page it will be displayed in
+     * takes in the post that is being displayed, the index of the post in the posts array, and which page it will
+     * be displayed in
      * the index of the post is used to direct the server on which post to modify
      * the post includes the username of the post's author with the ability to
      * display the comments of the post, like/dislike the post, and to friend/unfriend the post
@@ -715,9 +722,9 @@ public class GUI implements ActionListener {
 
             JPanel buttonPanel = new JPanel();
 
-            comment.setPreferredSize(new Dimension(100, 20));
-            like.setPreferredSize(new Dimension(100, 20));
-            dislike.setPreferredSize(new Dimension(100, 20));
+            comment.setPreferredSize(new Dimension(100 , 20));
+            like.setPreferredSize(new Dimension(100 , 20));
+            dislike.setPreferredSize(new Dimension(100 , 20));
             ja.setEditable(false);
 
 
@@ -737,13 +744,13 @@ public class GUI implements ActionListener {
                 friend.addActionListener(new GUI());
                 friend.setActionCommand(num + "-unFriend" + page + "-" + post.getAuthor().getUsername());
             }
-            friend.setPreferredSize(new Dimension(100, 20));
+            friend.setPreferredSize(new Dimension(100 , 20));
             buttonPanel.add(friend);
 
 
-            postPanel.add(buttonPanel, BorderLayout.SOUTH);
+            postPanel.add(buttonPanel , BorderLayout.SOUTH);
         }
-        postPanel.add(new JScrollPane(ja), BorderLayout.CENTER);
+        postPanel.add(new JScrollPane(ja) , BorderLayout.CENTER);
 
         return postPanel;
     }
@@ -783,7 +790,7 @@ public class GUI implements ActionListener {
         JPanel commentPanel = new JPanel();
 
         if (listOfComments.size() > 1) {
-            commentPanel.setLayout(new BoxLayout(commentPanel, BoxLayout.Y_AXIS));
+            commentPanel.setLayout(new BoxLayout(commentPanel , BoxLayout.Y_AXIS));
         }
 
         for (int i = 0; i < listOfComments.size(); i++) {
@@ -801,12 +808,12 @@ public class GUI implements ActionListener {
             jt.setPreferredSize(new Dimension(282 , 113));
             jt.setEditable(false);
             comment.add(jt , BorderLayout.CENTER);
-            comment.setBorder(new EmptyBorder(10 , 10 , 10 ,10));
+            comment.setBorder(new EmptyBorder(10 , 10 , 10 , 10));
             commentPanel.add(comment);
 
             JButton like = new JButton("Like " + listOfComments.get(i).getLikes());
             like.addActionListener(new GUI());
-            like.setBorder(new LineBorder(new Color(46 , 247 ,13)));
+            like.setBorder(new LineBorder(new Color(46 , 247 , 13)));
             like.setActionCommand(postIndex + "-likeCommentBoard-" + i);
             JButton dislike = new JButton("Dislike " + listOfComments.get(i).getDislikes());
             dislike.addActionListener(new GUI());
@@ -856,8 +863,10 @@ public class GUI implements ActionListener {
                 //checks if the source is from the sign in button and the action command equals "Sign In"
                 //if so, gets the username and password entered in their respective text fields
                 //turns the password into a string and checks if either of the text fields are empty
-                //if there is an empty field the program displays an error message asking the user to fill out all the fields
-                //if both the text fields are filed, sends the information to the server to add the user to the database
+                //if there is an empty field the program displays an error message asking the user to fill out all
+                // the fields
+                //if both the text fields are filed, sends the information to the server to add the user to the
+                //database
                 //assigns the signed in user to the user that signed in
                 //also checks if the password is correct, if the password is incorrect displays an error message
                 //takes the user to the newsfeed
@@ -870,7 +879,7 @@ public class GUI implements ActionListener {
                 }
 
                 if (pass.isEmpty() || username.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Please fill out all text fields",
+                    JOptionPane.showMessageDialog(null , "Please fill out all text fields",
                             "Error", JOptionPane.INFORMATION_MESSAGE);
                 } else {
 
@@ -905,8 +914,8 @@ public class GUI implements ActionListener {
                         posts = allPost;
                         createNewsFeed(allPost);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Username or Password is incorrect",
-                                "Error", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Username or Password is " +
+                                        "incorrect", "Error", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             } else if (e.getSource() == signUp && signUp.getActionCommand().equals("New to Flicksy? Join now")) {
@@ -950,8 +959,8 @@ public class GUI implements ActionListener {
                         signedInUser = new User(username, pass, profile);
                         createProfilePage();
                     } else {
-                        JOptionPane.showMessageDialog(null, response,
-                                "Error", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null , response,
+                                "Error" , JOptionPane.INFORMATION_MESSAGE);
                     }
 
                 }
@@ -965,7 +974,8 @@ public class GUI implements ActionListener {
                 signUp.setText("New to Flicksy? Join now");
                 welcomeMessage.setText("Welcome to your Flicksy Community");
             } else if (e.getSource() == addComment && !addCommentContent.getText().equals("Add A Comment\n")) {
-                //checks if the source is from add comment and if the addCommentContent text doesn't equal the base text
+                //checks if the source is from add comment and if the addCommentContent text doesn't equal the base
+                // text
                 //if everything is okay, adds a comment to the post and updates the comment board
                 Comment comment = new Comment(signedInUser , addCommentContent.getText());
                 int postIndex = Integer.parseInt(checkButton.getActionCommand());
@@ -986,7 +996,8 @@ public class GUI implements ActionListener {
                 commentBoard.setVisible(false);
                 createComment(allPost.get(postIndex) , postIndex);
             } else if (e.getSource() == addPostButton && !addPost.getText().equals("Start a Post...")) {
-                //checks if the source is fromm the add post button and if the add post content doesn't equal the base text
+                //checks if the source is fromm the add post button and if the add post content doesn't equal the
+                // base text
                 //if everything is okay, adds a post and updates the newsfeed with the new post
                 Post post = new Post(signedInUser , addPost.getText());
 
@@ -1007,7 +1018,8 @@ public class GUI implements ActionListener {
                 createNewsFeed(allPost);
             } else if (e.getSource() == searchButton && !search.getText().equals("Search...")) {
                 //checks if the source is from search button and the search text doesn't equal the base text
-                //if everything is okay, sends the search string to the server to find all the users with username that contains the search message
+                //if everything is okay, sends the search string to the server to find all the users with username
+                // that contains the search message
                 //if there is no result/users found displays an error message
                 //if there is a result displays the option pane of all the users found
 
@@ -1024,9 +1036,9 @@ public class GUI implements ActionListener {
                     }
 
 
-                    String choice = (String) JOptionPane.showInputDialog(null, "What is your choice?",
-                            "Search Client", JOptionPane.QUESTION_MESSAGE, null,
-                            searchResultString, searchResultString[0]);
+                    String choice = (String) JOptionPane.showInputDialog(null , "What is " +
+                                    "your choice?", "Search Client" , JOptionPane.QUESTION_MESSAGE , null ,
+                            searchResultString , searchResultString[0]);
 
                     client.sendMessageToServer("find user based on username");
                     client.sendMessageToServer(choice);
@@ -1088,13 +1100,16 @@ public class GUI implements ActionListener {
                 String username = friendButton.getActionCommand();
                 //checks if the source is from the friend button in the user profile and the text equals "Friend"
                 //if so communicates with the server to find the friend and adds the friend
-                //if the user is already added, blocked by the user, or if the user equals the signed user displays a error message
+                //if the user is already added, blocked by the user, or if the user equals the signed user
+                // displays a error message
 
                 client.sendMessageToServer("friend");
                 client.sendMessageToServer(username);
                 client.sendMessageToServer(signedInUser);
 
+
                 String response = (String) client.receiveMessageFromServer();
+                //System.out.println(response);
 
                 if (response.equals("adding a friend")) {
 
@@ -1113,7 +1128,6 @@ public class GUI implements ActionListener {
                         Post post = (Post) client.receiveMessageFromServer();
                         usersPost.add(post);
                     }
-
                     friendButton.setText("UnFriend");
                     createUserProfile(friend , usersPost);
                 } else if (response.equals("you have already added this user as a friend")
@@ -1139,18 +1153,20 @@ public class GUI implements ActionListener {
 
                     User friend = (User) client.receiveMessageFromServer();
 
-                    signedInUser.removeFriend(friend);
+                    signedInUser = (User) client.receiveMessageFromServer();
+
                     newsFeed.setVisible(false);
                     friendButton.setText("Friend");
                 } else if (response.equals("friend and user are equal")) {
-                    JOptionPane.showMessageDialog(null, response , "Error",
+                    JOptionPane.showMessageDialog(null , response , "Error" ,
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             } else if (e.getSource() == block && block.getText().equals("Block")) {
                 String username = block.getActionCommand();
                 //checks if the source is from the block button in the user profile and the text equals "Block"
                 //if so communicates with the server to find the user and blocks the user
-                //displays an error message if there is an exception thrown when blocking the user, ie the user is already blocked
+                //displays an error message if there is an exception thrown when blocking the user, ie the
+                // user is already blocked
 
                 client.sendMessageToServer("block");
                 client.sendMessageToServer(username);
@@ -1163,7 +1179,7 @@ public class GUI implements ActionListener {
                     signedInUser.blockUser(blocked);
                     block.setText("Unblock");
                 } else {
-                    JOptionPane.showMessageDialog(null, response , "Error",
+                    JOptionPane.showMessageDialog(null , response , "Error" ,
                             JOptionPane.INFORMATION_MESSAGE);
                 }
 
@@ -1176,6 +1192,7 @@ public class GUI implements ActionListener {
                 client.sendMessageToServer(signedInUser);
 
                 User unblocked = (User) client.receiveMessageFromServer();
+                signedInUser = (User) client.receiveMessageFromServer();
                 signedInUser.unblockUser(unblocked);
                 block.setText("Block");
             } else if (e.getSource() == newsFeedButton) {
@@ -1238,7 +1255,7 @@ public class GUI implements ActionListener {
                 //checks if the source is from the news feed or from sneak peak page
                 //if so creates the comment board with the post and the index of the post
                 int postIndex = Integer.parseInt(checkButton.getActionCommand().substring(index + 1));
-                System.out.println(checkButton.getActionCommand());
+                //System.out.println(checkButton.getActionCommand());
 
                 client.sendMessageToServer("get all posts");
                 int size = (Integer) client.receiveMessageFromServer();
@@ -1378,7 +1395,7 @@ public class GUI implements ActionListener {
 
                     User friend = (User) client.receiveMessageFromServer();
 
-                    signedInUser.removeFriend(friend);
+                    signedInUser = (User) client.receiveMessageFromServer();
                     newsFeed.setVisible(false);
 
                     client.sendMessageToServer("get all posts");
@@ -1391,7 +1408,7 @@ public class GUI implements ActionListener {
 
                     createNewsFeed(allPost);
                 } else if (response.equals("friend and user are equal")) {
-                    JOptionPane.showMessageDialog(null, response , "Error",
+                    JOptionPane.showMessageDialog(null , response , "Error" ,
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             }

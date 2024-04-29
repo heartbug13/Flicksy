@@ -14,9 +14,9 @@ import java.util.concurrent.*;
  *
  */
 
-public class Server{
+public class Server {
     //Field declarations, port set to 8080, MAX_THREADS set to 100
-    private static final int port = 8080;
+    private static final int PORT = 8080;
     private static final int MAX_THREADS = 100;
     private static Thread[] threads;
     private static ServerSocket serverSocket;
@@ -24,7 +24,7 @@ public class Server{
 
     public Server() throws IOException {
         threads = new Thread[MAX_THREADS];
-        serverSocket = new ServerSocket(port);
+        serverSocket = new ServerSocket(PORT);
         database.readDatabase();
 
         // Constructor for server class - initializes threads and creates server socket
@@ -86,8 +86,8 @@ public class Server{
     public static void main(String[] args) {
         // creates instance of server class and starts it in a new thread.
 
-        Database database = new Database();
-        database.readDatabase();
+        Database database1 = new Database();
+        database1.readDatabase();
 
         try {
             Server server = new Server();
@@ -98,7 +98,7 @@ public class Server{
                 // calls findFreeThread method to find an available thread
 
                 if (freeThreadIndex != -1) {
-                    threads[freeThreadIndex] = new Thread(new ClientHandler(clientSocket, database));
+                    threads[freeThreadIndex] = new Thread(new ClientHandler(clientSocket, database1));
                     threads[freeThreadIndex].start();
                 } else {
                     System.out.println("No free threads available"); //**

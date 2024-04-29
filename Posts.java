@@ -9,7 +9,7 @@ import java.util.List;
  * @version April 1, 2024
  *
  */
- interface Posts {
+interface Posts {
     User getAuthor();
     String getContent();
     int getLikes();
