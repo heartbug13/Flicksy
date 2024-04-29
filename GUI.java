@@ -8,6 +8,17 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Group Project - Social Media
+ *
+ * recreates a social media platform
+ *
+ * @author Samantha Grief, Connor Mccarthy, Ehssan Kanamkandy, Jaheim Cruickshank, L10
+ *
+ * @version April 1, 2024
+ *
+ */
+
 public class GUI implements ActionListener {
     private static JButton signIn;
     private static JButton signUp;
